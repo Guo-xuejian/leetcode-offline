@@ -1,0 +1,7 @@
+{
+ "Official.md": [
+  {
+   "go": "type entry struct {\n\tkey   int\n\tvalue int\n}\n\ntype LRUCache struct {\n\tcapacity int\n\tcache    map[int]*list.Element\n\tll       *list.List\n}\n\nfunc Constructor(capacity int) LRUCache {\n\treturn LRUCache{\n\t\tcapacity: capacity,\n\t\tcache:    make(map[int]*list.Element),\n\t\tll:       list.New(),\n\t}\n}\n\nfunc (this *LRUCache) Get(key int) int {\n\tif elem, ok := this.cache[key]; ok {\n\t\t// 将最近使用的元素移动到末尾\n\t\tthis.ll.MoveToBack(elem)\n\t\treturn elem.Value.(*entry).value\n\t}\n\treturn -1\n}\n\nfunc (this *LRUCache) Put(key int, value int) {\n\tif elem, ok := this.cache[key]; ok {\n\t\telem.Value.(*entry).value = value\n\t\tthis.ll.MoveToBack(elem)\n\t\treturn\n\t}\n\telem := this.ll.PushBack(&entry{key, value})\n\tthis.cache[key] = elem\n\tif this.ll.Len() > this.capacity {\n\t\t// 删除最久未使用的元素（队首）\n\t\tfront := this.ll.Front()\n\t\tthis.ll.Remove(front)\n\t\tdelete(this.cache, front.Value.(*entry).key)\n\t}\n}"
+  }
+ ]
+}

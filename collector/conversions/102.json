@@ -1,0 +1,7 @@
+{
+ "Official.md": [
+  {
+   "python": "class Solution:\n    def levelOrder(self, root: TreeNode) -> List[List[int]]:\n        ret = []\n        if root is None:\n            return ret\n        q = [root]\n        i = 0\n        while q:\n            ret.append([])\n            p = []\n            for node in q:\n                ret[i].append(node.val)\n                if node.left is not None:\n                    p.append(node.left)\n                if node.right is not None:\n                    p.append(node.right)\n            q = p\n            i += 1\n        return ret"
+  }
+ ]
+}

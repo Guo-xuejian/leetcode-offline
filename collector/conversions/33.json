@@ -1,0 +1,7 @@
+{
+ "Official.md": [
+  {
+   "go": "func search(nums []int, target int) int {\n\tif len(nums) == 0 {\n\t\treturn -1\n\t}\n\tl, r := 0, len(nums)-1\n\tfor l <= r {\n\t\tmid := (l + r) / 2\n\t\tif nums[mid] == target {\n\t\t\treturn mid\n\t\t}\n\t\tif nums[0] <= nums[mid] {\n\t\t\tif nums[0] <= target && target < nums[mid] {\n\t\t\t\tr = mid - 1\n\t\t\t} else {\n\t\t\t\tl = mid + 1\n\t\t\t}\n\t\t} else {\n\t\t\tif nums[mid] < target && target <= nums[len(nums)-1] {\n\t\t\t\tl = mid + 1\n\t\t\t} else {\n\t\t\t\tr = mid - 1\n\t\t\t}\n\t\t}\n\t}\n\treturn -1\n}"
+  }
+ ]
+}

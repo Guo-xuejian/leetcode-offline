@@ -1,0 +1,12 @@
+{
+ "1.md": [
+  {
+   "go": "func isValid(s string) bool {\n\tdic := map[byte]byte{'{': '}', '[': ']', '(': ')', '?': '?'}\n\tstack := []byte{'?'}\n\tfor i := 0; i < len(s); i++ {\n\t\tc := s[i]\n\t\tif _, ok := dic[c]; ok {\n\t\t\tstack = append(stack, c)\n\t\t} else if dic[stack[len(stack)-1]] != c {\n\t\t\treturn false\n\t\t}\n\t}\n\treturn len(stack) == 1\n}"
+  }
+ ],
+ "2.md": [
+  {
+   "go": "func isValid(s string) bool {\n\tdic := map[byte]byte{')': '(', ']': '[', '}': '{'}\n\tstack := []byte{}\n\tfor i := 0; i < len(s); i++ {\n\t\tc := s[i]\n\t\tif len(stack) > 0 {\n\t\t\tif _, ok := dic[c]; ok {\n\t\t\t\tif stack[len(stack)-1] == dic[c] {\n\t\t\t\t\tstack = stack[:len(stack)-1]\n\t\t\t\t} else {\n\t\t\t\t\treturn false\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tstack = append(stack, c)\n\t\t\t}\n\t\t} else {\n\t\t\tstack = append(stack, c)\n\t\t}\n\t}\n\treturn len(stack) == 0\n}"
+  }
+ ]
+}

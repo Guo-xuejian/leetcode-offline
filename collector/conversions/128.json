@@ -1,0 +1,7 @@
+{
+ "1.md": [
+  {
+   "go": "func longestConsecutive(nums []int) int {\n\thashDict := map[int]int{}\n\tmaxLength := 0\n\tfor _, num := range nums {\n\t\tif _, ok := hashDict[num]; !ok {\n\t\t\tleft := hashDict[num-1]\n\t\t\tright := hashDict[num+1]\n\t\t\tcurLength := 1 + left + right\n\t\t\tif curLength > maxLength {\n\t\t\t\tmaxLength = curLength\n\t\t\t}\n\t\t\thashDict[num] = curLength\n\t\t\thashDict[num-left] = curLength\n\t\t\thashDict[num+right] = curLength\n\t\t}\n\t}\n\treturn maxLength\n}"
+  }
+ ]
+}

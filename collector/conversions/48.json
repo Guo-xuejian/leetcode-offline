@@ -1,0 +1,10 @@
+{
+ "2.md": [
+  {
+   "go": "func rotate(matrix [][]int) {\n\tn := len(matrix)\n\t// 深拷贝 matrix -> tmp\n\ttmp := make([][]int, n)\n\tfor i := range tmp {\n\t\ttmp[i] = make([]int, n)\n\t\tcopy(tmp[i], matrix[i])\n\t}\n\t// 根据元素旋转公式，遍历修改原矩阵 matrix 的各元素\n\tfor i := 0; i < n; i++ {\n\t\tfor j := 0; j < n; j++ {\n\t\t\tmatrix[j][n-1-i] = tmp[i][j]\n\t\t}\n\t}\n}"
+  },
+  {
+   "go": "func rotate(matrix [][]int) {\n\t// 设矩阵行列数为 n\n\tn := len(matrix)\n\t// 起始点范围为 0 <= i < n / 2 , 0 <= j < (n + 1) / 2\n\tfor i := 0; i < n/2; i++ {\n\t\tfor j := 0; j < (n+1)/2; j++ {\n\t\t\t// 暂存 A 至 tmp\n\t\t\ttmp := matrix[i][j]\n\t\t\t// 元素旋转操作 A <- D <- C <- B <- tmp\n\t\t\tmatrix[i][j] = matrix[n-1-j][i]\n\t\t\tmatrix[n-1-j][i] = matrix[n-1-i][n-1-j]\n\t\t\tmatrix[n-1-i][n-1-j] = matrix[j][n-1-i]\n\t\t\tmatrix[j][n-1-i] = tmp\n\t\t}\n\t}\n}"
+  }
+ ]
+}

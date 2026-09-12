@@ -1,0 +1,10 @@
+{
+ "1.md": [
+  {
+   "go": "func sortList(head *ListNode) *ListNode {\n\tif head == nil || head.Next == nil {\n\t\treturn head // termination.\n\t}\n\t// cut the LinkedList at the mid index.\n\tslow, fast := head, head.Next\n\tfor fast != nil && fast.Next != nil {\n\t\tfast = fast.Next.Next\n\t\tslow = slow.Next\n\t}\n\tmid := slow.Next\n\tslow.Next = nil // save and cut.\n\t// recursive for cutting.\n\tleft, right := sortList(head), sortList(mid)\n\t// merge `left` and `right` linked list and return it.\n\th := &ListNode{}\n\tres := h\n\tfor left != nil && right != nil {\n\t\tif left.Val < right.Val {\n\t\t\th.Next = left\n\t\t\tleft = left.Next\n\t\t} else {\n\t\t\th.Next = right\n\t\t\tright = right.Next\n\t\t}\n\t\th = h.Next\n\t}\n\tif left != nil {\n\t\th.Next = left\n\t} else {\n\t\th.Next = right\n\t}\n\treturn res.Next\n}"
+  },
+  {
+   "go": "func sortList(head *ListNode) *ListNode {\n\th, length, intv := head, 0, 1\n\tfor h != nil {\n\t\th = h.Next\n\t\tlength++\n\t}\n\tres := &ListNode{}\n\tres.Next = head\n\t// merge the list in different intv.\n\tfor intv < length {\n\t\tpre, h := res, res.Next\n\t\tfor h != nil {\n\t\t\t// get the two merge head `h1`, `h2`\n\t\t\th1, i := h, intv\n\t\t\tfor i > 0 && h != nil {\n\t\t\t\th = h.Next\n\t\t\t\ti--\n\t\t\t}\n\t\t\tif i > 0 {\n\t\t\t\tbreak // no need to merge because the `h2` is None.\n\t\t\t}\n\t\t\th2, i := h, intv\n\t\t\tfor i > 0 && h != nil {\n\t\t\t\th = h.Next\n\t\t\t\ti--\n\t\t\t}\n\t\t\tc1, c2 := intv, intv-i // the `c2`: length of `h2` can be smaller than the `intv`.\n\t\t\t// merge the `h1` and `h2`.\n\t\t\tfor c1 > 0 && c2 > 0 {\n\t\t\t\tif h1.Val < h2.Val {\n\t\t\t\t\tpre.Next = h1\n\t\t\t\t\th1 = h1.Next\n\t\t\t\t\tc1--\n\t\t\t\t} else {\n\t\t\t\t\tpre.Next = h2\n\t\t\t\t\th2 = h2.Next\n\t\t\t\t\tc2--\n\t\t\t\t}\n\t\t\t\tpre = pre.Next\n\t\t\t}\n\t\t\tif c1 > 0 {\n\t\t\t\tpre.Next = h1\n\t\t\t} else {\n\t\t\t\tpre.Next = h2\n\t\t\t}\n\t\t\tfor c1 > 0 || c2 > 0 {\n\t\t\t\tpre = pre.Next\n\t\t\t\tc1--\n\t\t\t\tc2--\n\t\t\t}\n\t\t\tpre.Next = h\n\t\t}\n\t\tintv *= 2\n\t}\n\treturn res.Next\n}"
+  }
+ ]
+}

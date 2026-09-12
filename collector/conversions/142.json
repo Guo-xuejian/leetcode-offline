@@ -1,0 +1,15 @@
+{
+ "1.md": [
+  {
+   "go": "func detectCycle(head *ListNode) *ListNode {\n\tfast, slow := head, head\n\tfor {\n\t\tif fast == nil || fast.Next == nil {\n\t\t\treturn nil\n\t\t}\n\t\tfast = fast.Next.Next\n\t\tslow = slow.Next\n\t\tif fast == slow {\n\t\t\tbreak\n\t\t}\n\t}\n\tfast = head\n\tfor fast != slow {\n\t\tfast = fast.Next\n\t\tslow = slow.Next\n\t}\n\treturn fast\n}"
+  }
+ ],
+ "Official.md": [
+  {
+   "python": "class Solution:\n    def detectCycle(self, head: ListNode) -> ListNode:\n        seen = set()\n        while head is not None:\n            if head in seen:\n                return head\n            seen.add(head)\n            head = head.next\n        return None"
+  },
+  {
+   "python": "class Solution:\n    def detectCycle(self, head: ListNode) -> ListNode:\n        slow, fast = head, head\n        while fast is not None:\n            slow = slow.next\n            if fast.next is None:\n                return None\n            fast = fast.next.next\n            if fast == slow:\n                p = head\n                while p != slow:\n                    p = p.next\n                    slow = slow.next\n                return p\n        return None"
+  }
+ ]
+}

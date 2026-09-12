@@ -1,0 +1,7 @@
+{
+ "2.md": [
+  {
+   "go": "func canFinish(numCourses int, prerequisites [][]int) bool {\n\tvar dfs func(i int, adjacency [][]int, flags []int) bool\n\tdfs = func(i int, adjacency [][]int, flags []int) bool {\n\t\tif flags[i] == -1 {\n\t\t\treturn true\n\t\t}\n\t\tif flags[i] == 1 {\n\t\t\treturn false\n\t\t}\n\t\tflags[i] = 1\n\t\tfor _, j := range adjacency[i] {\n\t\t\tif !dfs(j, adjacency, flags) {\n\t\t\t\treturn false\n\t\t\t}\n\t\t}\n\t\tflags[i] = -1\n\t\treturn true\n\t}\n\tadjacency := make([][]int, numCourses)\n\tflags := make([]int, numCourses)\n\tfor _, pre := range prerequisites {\n\t\tcur, prev := pre[0], pre[1]\n\t\tadjacency[prev] = append(adjacency[prev], cur)\n\t}\n\tfor i := 0; i < numCourses; i++ {\n\t\tif !dfs(i, adjacency, flags) {\n\t\t\treturn false\n\t\t}\n\t}\n\treturn true\n}"
+  }
+ ]
+}

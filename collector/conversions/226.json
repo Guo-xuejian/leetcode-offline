@@ -1,0 +1,10 @@
+{
+ "1.md": [
+  {
+   "go": "func invertTree(root *TreeNode) *TreeNode {\n\t// 递归函数的终止条件，节点为空时返回\n\tif root == nil {\n\t\treturn nil\n\t}\n\t// 将当前节点的左右子树交换\n\troot.Left, root.Right = root.Right, root.Left\n\t// 递归交换当前节点的 左子树和右子树\n\tinvertTree(root.Left)\n\tinvertTree(root.Right)\n\t// 函数返回时就表示当前这个节点，以及它的左右子树都已经交换完了\n\treturn root\n}"
+  },
+  {
+   "go": "func invertTree(root *TreeNode) *TreeNode {\n\tif root == nil {\n\t\treturn nil\n\t}\n\t// 将二叉树中的节点逐层放入队列中，再迭代处理队列中的元素\n\tqueue := []*TreeNode{root}\n\tfor len(queue) > 0 {\n\t\t// 每次都从队列中拿一个节点，并交换这个节点的左右子树\n\t\ttmp := queue[0]\n\t\tqueue = queue[1:]\n\t\ttmp.Left, tmp.Right = tmp.Right, tmp.Left\n\t\t// 如果当前节点的左子树不为空，则放入队列等待后续处理\n\t\tif tmp.Left != nil {\n\t\t\tqueue = append(queue, tmp.Left)\n\t\t}\n\t\t// 如果当前节点的右子树不为空，则放入队列等待后续处理\n\t\tif tmp.Right != nil {\n\t\t\tqueue = append(queue, tmp.Right)\n\t\t}\n\t}\n\t// 返回处理完的根节点\n\treturn root\n}"
+  }
+ ]
+}

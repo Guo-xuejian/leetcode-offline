@@ -1,0 +1,18 @@
+{
+ "1.md": [
+  {
+   "go": "func reverseList(head *ListNode) *ListNode {\n\t// 申请两个节点，pre 和 cur，pre 指向 nil\n\tvar pre *ListNode\n\tcur := head\n\t// 遍历链表\n\tfor cur != nil {\n\t\t// 记录当前节点的下一个节点\n\t\ttmp := cur.Next\n\t\t// 然后将当前节点指向 pre\n\t\tcur.Next = pre\n\t\t// pre 和 cur 节点都前进一位\n\t\tpre = cur\n\t\tcur = tmp\n\t}\n\treturn pre\n}"
+  },
+  {
+   "go": "func reverseList(head *ListNode) *ListNode {\n\t// 递归终止条件是当前为空，或者下一个节点为空\n\tif head == nil || head.Next == nil {\n\t\treturn head\n\t}\n\t// 这里的 cur 就是最后一个节点\n\tcur := reverseList(head.Next)\n\t// 这里请配合动画演示理解\n\t// 如果链表是 1->2->3->4->5，那么此时的 cur 就是 5\n\t// 而 head 是 4，head 的下一个是 5，下下一个是空\n\t// 所以 head.Next.Next 就是 5->4\n\thead.Next.Next = head\n\t// 防止链表循环，需要将 head.Next 设置为空\n\thead.Next = nil\n\t// 每层递归函数都返回 cur，也就是最后一个节点\n\treturn cur\n}"
+  }
+ ],
+ "Official.md": [
+  {
+   "python": "class Solution:\n    def reverseList(self, head: ListNode) -> ListNode:\n        prev = None\n        curr = head\n        while curr is not None:\n            nxt = curr.next\n            curr.next = prev\n            prev = curr\n            curr = nxt\n        return prev"
+  },
+  {
+   "python": "class Solution:\n    def reverseList(self, head: ListNode) -> ListNode:\n        if head is None or head.next is None:\n            return head\n        newHead = self.reverseList(head.next)\n        head.next.next = head\n        head.next = None\n        return newHead"
+  }
+ ]
+}

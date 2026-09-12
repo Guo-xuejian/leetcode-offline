@@ -1,0 +1,7 @@
+{
+ "1.md": [
+  {
+   "go": "func lengthOfLongestSubstringKDistinct(s string, k int) int {\n\tlookup := map[byte]int{}\n\tstart, end, maxLen, counter := 0, 0, 0, 0\n\tfor end < len(s) {\n\t\tif lookup[s[end]] == 0 {\n\t\t\tcounter++\n\t\t}\n\t\tlookup[s[end]]++\n\t\tend++\n\t\tfor counter > k {\n\t\t\tif lookup[s[start]] == 1 {\n\t\t\t\tcounter--\n\t\t\t}\n\t\t\tlookup[s[start]]--\n\t\t\tstart++\n\t\t}\n\t\tif end-start > maxLen {\n\t\t\tmaxLen = end - start\n\t\t}\n\t}\n\treturn maxLen\n}"
+  }
+ ]
+}

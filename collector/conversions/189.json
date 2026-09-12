@@ -1,0 +1,18 @@
+{
+ "1.md": [
+  {
+   "python": "class Solution:\n    def rotate(self, nums: List[int], k: int) -> None:\n        k %= len(nums)\n        self.reverse(nums, 0, len(nums) - 1)\n        self.reverse(nums, 0, k - 1)\n        self.reverse(nums, k, len(nums) - 1)\n\n    def reverse(self, nums: List[int], l: int, r: int) -> None:\n        while l < r:\n            nums[l], nums[r] = nums[r], nums[l]\n            l += 1\n            r -= 1"
+  }
+ ],
+ "Official.md": [
+  {
+   "python": "class Solution:\n    def rotate(self, nums: List[int], k: int) -> None:\n        n = len(nums)\n        newNums = [0] * n\n        for i, v in enumerate(nums):\n            newNums[(i + k) % n] = v\n        nums[:] = newNums"
+  },
+  {
+   "python": "class Solution:\n    def rotate(self, nums: List[int], k: int) -> None:\n        n = len(nums)\n        k %= n\n        count = 0\n        start = 0\n        while count < n:\n            pre = nums[start]\n            cur = start\n            while True:\n                nxt = (cur + k) % n\n                nums[nxt], pre = pre, nums[nxt]\n                cur = nxt\n                count += 1\n                if cur == start:\n                    break\n            start += 1"
+  },
+  {
+   "python": "class Solution:\n    def rotate(self, nums: List[int], k: int) -> None:\n        def reverse(i: int, j: int) -> None:\n            while i < j:\n                nums[i], nums[j] = nums[j], nums[i]\n                i += 1\n                j -= 1\n\n        n = len(nums)\n        k %= n\n        reverse(0, n - 1)\n        reverse(0, k - 1)\n        reverse(k, n - 1)"
+  }
+ ]
+}

@@ -1,0 +1,23 @@
+{
+ "1.md": [
+  {
+   "go": "// depth := 0 // 记录遍历到第几层\n// for queue 非空 {\n//     depth++\n//     n := len(queue)\n//     循环 n 次:\n//         node := queue.pop()\n//         for node 的所有相邻结点 m {\n//             if m 未访问过 {\n//                 queue.push(m)\n//             }\n//         }\n// }"
+  },
+  {
+   "go": "func orangesRotting(grid [][]int) int {\n\tM, N := len(grid), len(grid[0])\n\tqueue := [][2]int{}\n\tcount := 0 // count 表示新鲜橘子的数量\n\tfor r := 0; r < M; r++ {\n\t\tfor c := 0; c < N; c++ {\n\t\t\tif grid[r][c] == 1 {\n\t\t\t\tcount++\n\t\t\t} else if grid[r][c] == 2 {\n\t\t\t\tqueue = append(queue, [2]int{r, c})\n\t\t\t}\n\t\t}\n\t}\n\tround := 0 // round 表示腐烂的轮数，或者分钟数\n\tfor count > 0 && len(queue) > 0 {\n\t\tround++\n\t\tn := len(queue)\n\t\tfor i := 0; i < n; i++ {\n\t\t\tr, c := queue[0][0], queue[0][1]\n\t\t\tqueue = queue[1:]\n\t\t\tif r-1 >= 0 && grid[r-1][c] == 1 {\n\t\t\t\tgrid[r-1][c] = 2\n\t\t\t\tcount--\n\t\t\t\tqueue = append(queue, [2]int{r - 1, c})\n\t\t\t}\n\t\t\tif r+1 < M && grid[r+1][c] == 1 {\n\t\t\t\tgrid[r+1][c] = 2\n\t\t\t\tcount--\n\t\t\t\tqueue = append(queue, [2]int{r + 1, c})\n\t\t\t}\n\t\t\tif c-1 >= 0 && grid[r][c-1] == 1 {\n\t\t\t\tgrid[r][c-1] = 2\n\t\t\t\tcount--\n\t\t\t\tqueue = append(queue, [2]int{r, c - 1})\n\t\t\t}\n\t\t\tif c+1 < N && grid[r][c+1] == 1 {\n\t\t\t\tgrid[r][c+1] = 2\n\t\t\t\tcount--\n\t\t\t\tqueue = append(queue, [2]int{r, c + 1})\n\t\t\t}\n\t\t}\n\t}\n\tif count > 0 {\n\t\treturn -1\n\t}\n\treturn round\n}"
+  }
+ ],
+ "2.md": [
+  {
+   "go": "// 设初始点为 (i, j)\n// dirs := [][2]int{{0, 1}, {0, -1}, {1, 0}, {-1, 0}} // 上、下、左、右\n// for _, d := range dirs {\n//     ni, nj := i+d[0], j+d[1]\n// }"
+  },
+  {
+   "go": "func orangesRotting(grid [][]int) int {\n\trow, col, time := len(grid), len(grid[0]), 0\n\tdirections := [][2]int{{1, 0}, {-1, 0}, {0, 1}, {0, -1}}\n\tqueue := [][3]int{}\n\t// add the rotten orange to the queue\n\tfor i := 0; i < row; i++ {\n\t\tfor j := 0; j < col; j++ {\n\t\t\tif grid[i][j] == 2 {\n\t\t\t\tqueue = append(queue, [3]int{i, j, time})\n\t\t\t}\n\t\t}\n\t}\n\t// bfs\n\tfor len(queue) > 0 {\n\t\ti, j, time = queue[0][0], queue[0][1], queue[0][2]\n\t\tqueue = queue[1:]\n\t\tfor _, d := range directions {\n\t\t\tni, nj := i+d[0], j+d[1]\n\t\t\tif ni >= 0 && ni < row && nj >= 0 && nj < col && grid[ni][nj] == 1 {\n\t\t\t\tgrid[ni][nj] = 2\n\t\t\t\tqueue = append(queue, [3]int{ni, nj, time + 1})\n\t\t\t}\n\t\t}\n\t}\n\t// if there are still fresh oranges, return -1\n\tfor _, r := range grid {\n\t\tfor _, v := range r {\n\t\t\tif v == 1 {\n\t\t\t\treturn -1\n\t\t\t}\n\t\t}\n\t}\n\treturn time\n}"
+  }
+ ],
+ "Official.md": [
+  {
+   "go": "func orangesRotting(grid [][]int) int {\n\tR, C := len(grid), len(grid[0])\n\t// queue - all starting cells with rotting oranges\n\tqueue := [][3]int{}\n\tfor r := 0; r < R; r++ {\n\t\tfor c := 0; c < C; c++ {\n\t\t\tif grid[r][c] == 2 {\n\t\t\t\tqueue = append(queue, [3]int{r, c, 0})\n\t\t\t}\n\t\t}\n\t}\n\td := 0\n\tfor len(queue) > 0 {\n\t\titem := queue[0]\n\t\tqueue = queue[1:]\n\t\tr, c, d = item[0], item[1], item[2]\n\t\tnr := [4]int{r - 1, r, r + 1, r}\n\t\tnc := [4]int{c, c - 1, c, c + 1}\n\t\tfor i := 0; i < 4; i++ {\n\t\t\tif nr[i] >= 0 && nr[i] < R && nc[i] >= 0 && nc[i] < C && grid[nr[i]][nc[i]] == 1 {\n\t\t\t\tgrid[nr[i]][nc[i]] = 2\n\t\t\t\tqueue = append(queue, [3]int{nr[i], nc[i], item[2] + 1})\n\t\t\t}\n\t\t}\n\t}\n\t// if there are still fresh oranges, return -1\n\tfor _, row := range grid {\n\t\tfor _, v := range row {\n\t\t\tif v == 1 {\n\t\t\t\treturn -1\n\t\t\t}\n\t\t}\n\t}\n\treturn d\n}"
+  }
+ ]
+}

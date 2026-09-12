@@ -1,0 +1,7 @@
+{
+ "Official.md": [
+  {
+   "python": "class Solution:\n    def jump(self, nums: List[int]) -> int:\n        position = len(nums) - 1\n        steps = 0\n        while position > 0:\n            for i in range(position):\n                if i + nums[i] >= position:\n                    position = i\n                    steps += 1\n                    break\n        return steps"
+  }
+ ]
+}

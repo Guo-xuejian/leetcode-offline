@@ -1,0 +1,10 @@
+{
+ "Official.md": [
+  {
+   "go": "// 此方法会超时\nfunc maxProfit(prices []int) int {\n\tans := 0\n\tfor i := 0; i < len(prices); i++ {\n\t\tfor j := i + 1; j < len(prices); j++ {\n\t\t\tif prices[j]-prices[i] > ans {\n\t\t\t\tans = prices[j] - prices[i]\n\t\t\t}\n\t\t}\n\t}\n\treturn ans\n}"
+  },
+  {
+   "go": "func maxProfit(prices []int) int {\n\tinf := int(1e9)\n\tminprice := inf\n\tmaxprofit := 0\n\tfor _, price := range prices {\n\t\tif price-minprice > maxprofit {\n\t\t\tmaxprofit = price - minprice\n\t\t}\n\t\tif price < minprice {\n\t\t\tminprice = price\n\t\t}\n\t}\n\treturn maxprofit\n}"
+  }
+ ]
+}

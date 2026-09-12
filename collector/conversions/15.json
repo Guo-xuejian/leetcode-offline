@@ -1,0 +1,7 @@
+{
+ "1.md": [
+  {
+   "go": "func threeSum(nums []int) [][]int {\n\tn := len(nums)\n\tres := [][]int{}\n\tif n < 3 {\n\t\treturn res\n\t}\n\tsort.Ints(nums)\n\tfor i := 0; i < n; i++ {\n\t\tif nums[i] > 0 {\n\t\t\treturn res\n\t\t}\n\t\tif i > 0 && nums[i] == nums[i-1] {\n\t\t\tcontinue\n\t\t}\n\t\tL, R := i+1, n-1\n\t\tfor L < R {\n\t\t\tif nums[i]+nums[L]+nums[R] == 0 {\n\t\t\t\tres = append(res, []int{nums[i], nums[L], nums[R]})\n\t\t\t\tfor L < R && nums[L] == nums[L+1] {\n\t\t\t\t\tL++\n\t\t\t\t}\n\t\t\t\tfor L < R && nums[R] == nums[R-1] {\n\t\t\t\t\tR--\n\t\t\t\t}\n\t\t\t\tL++\n\t\t\t\tR--\n\t\t\t} else if nums[i]+nums[L]+nums[R] > 0 {\n\t\t\t\tR--\n\t\t\t} else {\n\t\t\t\tL++\n\t\t\t}\n\t\t}\n\t}\n\treturn res\n}"
+  }
+ ]
+}

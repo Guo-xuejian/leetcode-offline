@@ -1,0 +1,12 @@
+{
+ "1.md": [
+  {
+   "go": "func maxArea(height []int) int {\n\ti, j, res := 0, len(height)-1, 0\n\tfor i < j {\n\t\tif height[i] < height[j] {\n\t\t\tif height[i]*(j-i) > res {\n\t\t\t\tres = height[i] * (j - i)\n\t\t\t}\n\t\t\ti++\n\t\t} else {\n\t\t\tif height[j]*(j-i) > res {\n\t\t\t\tres = height[j] * (j - i)\n\t\t\t}\n\t\t\tj--\n\t\t}\n\t}\n\treturn res\n}"
+  }
+ ],
+ "Official.md": [
+  {
+   "go": "func maxArea(height []int) int {\n\tl, r, ans := 0, len(height)-1, 0\n\tfor l < r {\n\t\tarea := min(height[l], height[r]) * (r - l)\n\t\tif area > ans {\n\t\t\tans = area\n\t\t}\n\t\tif height[l] <= height[r] {\n\t\t\tl++\n\t\t} else {\n\t\t\tr--\n\t\t}\n\t}\n\treturn ans\n}\n\nfunc min(a, b int) int {\n\tif a < b {\n\t\treturn a\n\t}\n\treturn b\n}"
+  }
+ ]
+}

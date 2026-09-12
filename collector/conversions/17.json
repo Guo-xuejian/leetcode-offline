@@ -1,0 +1,15 @@
+{
+ "1.md": [
+  {
+   "go": "func letterCombinations(digits string) []string {\n\tif len(digits) == 0 {\n\t\treturn []string{}\n\t}\n\t// 一个映射表，第二个位置是\"abc\"，第三个位置是\"def\"。。。\n\t// 这里也可以用 map，用数组可以更节省点内存\n\td := []string{\" \", \"*\", \"abc\", \"def\", \"ghi\", \"jkl\", \"mno\", \"pqrs\", \"tuv\", \"wxyz\"}\n\tres := []string{}\n\tvar dfs func(tmp string, index int)\n\tdfs = func(tmp string, index int) {\n\t\t// 递归的终止条件：index 记录每次遍历到字符串的位置\n\t\tif index == len(digits) {\n\t\t\tres = append(res, tmp)\n\t\t\treturn\n\t\t}\n\t\tc := digits[index]\n\t\t// 下标从 0 开始一直到 9，c-'0' 获取数字对应的下标，如 '2' 对应下标 2 即 \"abc\"\n\t\tletters := d[c-'0']\n\t\tfor _, ch := range letters {\n\t\t\tdfs(tmp+string(ch), index+1)\n\t\t}\n\t}\n\tdfs(\"\", 0)\n\treturn res\n}"
+  },
+  {
+   "go": "func letterCombinations(digits string) []string {\n\tif len(digits) == 0 {\n\t\treturn []string{}\n\t}\n\t// 一个映射表，第二个位置是\"abc\"，第三个位置是\"def\"。。。\n\td := []string{\" \", \"*\", \"abc\", \"def\", \"ghi\", \"jkl\", \"mno\", \"pqrs\", \"tuv\", \"wxyz\"}\n\t// 先往队列中加入一个空字符\n\tres := []string{\"\"}\n\tfor i := 0; i < len(digits); i++ {\n\t\t// 由当前遍历到的字符，取字典表中查找对应的字符串\n\t\tletters := d[digits[i]-'0']\n\t\tsize := len(res)\n\t\t// 计算出队列长度后，将队列中的每个元素挨个拿出来\n\t\tfor k := 0; k < size; k++ {\n\t\t\t// 每次都从队列中拿出第一个元素\n\t\t\ttmp := res[0]\n\t\t\tres = res[1:]\n\t\t\t// 然后跟 \"abc\" 这样的字符串拼接，并再次放到队列中\n\t\t\tfor _, j := range letters {\n\t\t\t\tres = append(res, tmp+string(j))\n\t\t\t}\n\t\t}\n\t}\n\treturn res\n}"
+  }
+ ],
+ "2.md": [
+  {
+   "go": "func letterCombinations(digits string) []string {\n\tif len(digits) == 0 {\n\t\treturn []string{}\n\t}\n\tphone := []string{\"abc\", \"def\", \"ghi\", \"jkl\", \"mno\", \"pqrs\", \"tuv\", \"wxyz\"}\n\tqueue := []string{\"\"} // 初始化队列\n\tfor i := 0; i < len(digits); i++ {\n\t\t// 这里不使用 int() 转换字符串，使用 ASCII 码：'2' - '2' = 0 对应 \"abc\"\n\t\tletters := phone[digits[i]-'2']\n\t\tsize := len(queue)\n\t\tfor k := 0; k < size; k++ {\n\t\t\ttmp := queue[0]\n\t\t\tqueue = queue[1:]\n\t\t\tfor _, letter := range letters {\n\t\t\t\tqueue = append(queue, tmp+string(letter))\n\t\t\t}\n\t\t}\n\t}\n\treturn queue\n}"
+  }
+ ]
+}

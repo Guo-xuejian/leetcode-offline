@@ -1,0 +1,35 @@
+# ---------- Flutter / Dart ----------
+app/build/
+app/.dart_tool/
+app/.flutter-plugins
+app/.flutter-plugins-dependencies
+app/.packages
+app/android/.gradle/
+app/android/local.properties
+app/android/key.properties
+app/android/app/*.jks
+app/ios/Pods/
+app/ios/.symlinks/
+app/*.iml
+app/.metadata
+
+# ---------- Python ----------
+__pycache__/
+*.pyc
+*.pyo
+
+# ---------- 大数据/中间产物（可通过 collector 管道重建） ----------
+collector/data/
+collector/output/
+
+# ---------- IDE / 系统 ----------
+.vscode/
+.idea/
+.claude/
+Thumbs.db
+Desktop.ini
+*.log
+
+# 发布产物（走 GitHub Release 附件）
+*.zip
+*.apk

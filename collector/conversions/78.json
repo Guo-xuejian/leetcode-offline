@@ -1,0 +1,15 @@
+{
+ "2.md": [
+  {
+   "go": "func combinationSum2(candidates []int, target int) [][]int {\n\tif len(candidates) == 0 {\n\t\treturn [][]int{}\n\t}\n\tsort.Ints(candidates)\n\tn := len(candidates)\n\tres := [][]int{}\n\tvar backtrack func(i, tmpSum int, tmpList []int)\n\tbacktrack = func(i, tmpSum int, tmpList []int) {\n\t\tif tmpSum == target {\n\t\t\tres = append(res, append([]int(nil), tmpList...))\n\t\t\treturn\n\t\t}\n\t\tfor j := i; j < n; j++ {\n\t\t\tif tmpSum+candidates[j] > target {\n\t\t\t\tbreak\n\t\t\t}\n\t\t\tif j > i && candidates[j] == candidates[j-1] {\n\t\t\t\tcontinue\n\t\t\t}\n\t\t\tbacktrack(j+1, tmpSum+candidates[j], append(tmpList, candidates[j]))\n\t\t}\n\t}\n\tbacktrack(0, 0, []int{})\n\treturn res\n}"
+  }
+ ],
+ "Official.md": [
+  {
+   "python": "class Solution:\n    def subsets(self, nums: List[int]) -> List[List[int]]:\n        n = len(nums)\n        ans = []\n        for mask in range(1 << n):\n            t = []\n            for i in range(n):\n                if mask >> i & 1:\n                    t.append(nums[i])\n            ans.append(t)\n        return ans"
+  },
+  {
+   "python": "class Solution:\n    def subsets(self, nums: List[int]) -> List[List[int]]:\n        ans, t = [], []\n\n        def dfs(cur: int) -> None:\n            if cur == len(nums):\n                ans.append(t[:])\n                return\n            t.append(nums[cur])\n            dfs(cur + 1)\n            t.pop()\n            dfs(cur + 1)\n\n        dfs(0)\n        return ans"
+  }
+ ]
+}

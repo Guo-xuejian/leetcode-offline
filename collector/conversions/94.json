@@ -1,0 +1,29 @@
+{
+ "1.md": [
+  {
+   "go": "const (\n\tWHITE = 0\n\tGRAY  = 1\n)\n\ntype stackItem struct {\n\tcolor int\n\tnode  *TreeNode\n}\n\nfunc inorderTraversal(root *TreeNode) []int {\n\tres := []int{}\n\tstack := []stackItem{{WHITE, root}}\n\tfor len(stack) > 0 {\n\t\tit := stack[len(stack)-1]\n\t\tstack = stack[:len(stack)-1]\n\t\tif it.node == nil {\n\t\t\tcontinue\n\t\t}\n\t\tif it.color == WHITE {\n\t\t\tstack = append(stack, stackItem{WHITE, it.node.Right})\n\t\t\tstack = append(stack, stackItem{GRAY, it.node})\n\t\t\tstack = append(stack, stackItem{WHITE, it.node.Left})\n\t\t} else {\n\t\t\tres = append(res, it.node.Val)\n\t\t}\n\t}\n\treturn res\n}"
+  }
+ ],
+ "2.md": [
+  {
+   "go": "func inorderTraversal(root *TreeNode) []int {\n\tres := []int{}\n\tvar dfs func(root *TreeNode)\n\tdfs = func(root *TreeNode) {\n\t\tif root == nil {\n\t\t\treturn\n\t\t}\n\t\t// 按照 左-打印-右 的方式遍历\n\t\tdfs(root.Left)\n\t\tres = append(res, root.Val)\n\t\tdfs(root.Right)\n\t}\n\tdfs(root)\n\treturn res\n}"
+  },
+  {
+   "go": "func inorderTraversal(root *TreeNode) []int {\n\tres := []int{}\n\tstack := []*TreeNode{}\n\tfor len(stack) > 0 || root != nil {\n\t\t// 不断往左子树方向走，每走一次就将当前节点保存到栈中\n\t\t// 这是模拟递归的调用\n\t\tif root != nil {\n\t\t\tstack = append(stack, root)\n\t\t\troot = root.Left\n\t\t} else {\n\t\t\t// 当前节点为空，说明左边走到头了，从栈中弹出节点并保存\n\t\t\t// 然后转向右边节点，继续上面整个过程\n\t\t\ttmp := stack[len(stack)-1]\n\t\t\tstack = stack[:len(stack)-1]\n\t\t\tres = append(res, tmp.Val)\n\t\t\troot = tmp.Right\n\t\t}\n\t}\n\treturn res\n}"
+  },
+  {
+   "go": "func inorderTraversal(root *TreeNode) []int {\n\tres := []int{}\n\tpre := (*TreeNode)(nil)\n\tfor root != nil {\n\t\t// 如果左节点不为空，就将当前节点连带右子树全部挂到\n\t\t// 左节点的最右子树下面\n\t\tif root.Left != nil {\n\t\t\tpre = root.Left\n\t\t\tfor pre.Right != nil {\n\t\t\t\tpre = pre.Right\n\t\t\t}\n\t\t\tpre.Right = root\n\t\t\t// 将 root 指向 root 的 left\n\t\t\ttmp := root\n\t\t\troot = root.Left\n\t\t\ttmp.Left = nil\n\t\t} else {\n\t\t\t// 左子树为空，则打印这个节点，并向右边遍历\n\t\t\tres = append(res, root.Val)\n\t\t\troot = root.Right\n\t\t}\n\t}\n\treturn res\n}"
+  }
+ ],
+ "Official.md": [
+  {
+   "python": "class Solution:\n    def inorderTraversal(self, root: TreeNode) -> List[int]:\n        res = []\n\n        def inorder(node: TreeNode) -> None:\n            if node is None:\n                return\n            inorder(node.left)\n            res.append(node.val)\n            inorder(node.right)\n\n        inorder(root)\n        return res"
+  },
+  {
+   "python": "class Solution:\n    def inorderTraversal(self, root: TreeNode) -> List[int]:\n        res = []\n        stack = []\n        while root is not None or stack:\n            while root is not None:\n                stack.append(root)\n                root = root.left\n            root = stack.pop()\n            res.append(root.val)\n            root = root.right\n        return res"
+  },
+  {
+   "python": "class Solution:\n    def inorderTraversal(self, root: TreeNode) -> List[int]:\n        res = []\n        while root is not None:\n            if root.left is not None:\n                # predecessor 节点就是当前 root 节点向左走一步，然后一直向右走至无法走为止\n                predecessor = root.left\n                while predecessor.right is not None and predecessor.right != root:\n                    predecessor = predecessor.right\n                # 让 predecessor 的右指针指向 root，继续遍历左子树\n                if predecessor.right is None:\n                    predecessor.right = root\n                    root = root.left\n                else:  # 说明左子树已经访问完了，我们需要断开链接\n                    res.append(root.val)\n                    predecessor.right = None\n                    root = root.right\n            else:  # 如果没有左孩子，则直接访问右孩子\n                res.append(root.val)\n                root = root.right\n        return res"
+  }
+ ]
+}

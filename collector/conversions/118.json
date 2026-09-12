@@ -1,0 +1,7 @@
+{
+ "1.md": [
+  {
+   "go": "func generate(numRows int) [][]int {\n\tif numRows == 0 {\n\t\treturn [][]int{}\n\t}\n\tres := [][]int{{1}}\n\tfor len(res) < numRows {\n\t\tprev := res[len(res)-1]\n\t\tnewRow := make([]int, len(prev)+1)\n\t\tnewRow[0] = 1\n\t\tfor i := 1; i < len(prev); i++ {\n\t\t\tnewRow[i] = prev[i-1] + prev[i]\n\t\t}\n\t\tnewRow[len(prev)] = 1\n\t\tres = append(res, newRow)\n\t}\n\treturn res\n}"
+  }
+ ]
+}

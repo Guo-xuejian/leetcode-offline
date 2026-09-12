@@ -1,0 +1,42 @@
+name: leetcode_offline
+description: "离线 LeetCode 题解浏览器：Go/Python 双语言题解、难度筛选、语法高亮。"
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.11.5
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  # 本地数据库（手机端）
+  sqflite: ^2.4.1
+  # 桌面端 SQLite 支持（Windows/macOS/Linux）
+  sqflite_common_ffi: ^2.3.4
+  path_provider: ^2.1.4
+  path: ^1.9.0
+  file_picker: ^8.1.4
+  shared_preferences: ^2.3.3
+  # Markdown 渲染题干/题解正文
+  flutter_markdown: ^0.7.4
+  # 代码语法高亮（离线，highlight.js 移植）
+  flutter_highlight: ^0.7.0
+  highlight: ^0.7.0
+  intl: ^0.20.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/data/leetcode.db

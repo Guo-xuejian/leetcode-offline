@@ -1,0 +1,10 @@
+{
+ "1.md": [
+  {
+   "go": "func largestRectangleArea(heights []int) int {\n\tsize := len(heights)\n\tres := 0\n\tfor i := 0; i < size; i++ {\n\t\tleft := i\n\t\tcurHeight := heights[i]\n\t\tfor left > 0 && heights[left-1] >= curHeight {\n\t\t\tleft--\n\t\t}\n\t\tright := i\n\t\tfor right < size-1 && heights[right+1] >= curHeight {\n\t\t\tright++\n\t\t}\n\t\tmaxWidth := right - left + 1\n\t\tif maxWidth*curHeight > res {\n\t\t\tres = maxWidth * curHeight\n\t\t}\n\t}\n\treturn res\n}"
+  },
+  {
+   "go": "func largestRectangleArea(heights []int) int {\n\tsize := len(heights)\n\tres := 0\n\theights = append([]int{0}, append(heights, 0)...)\n\t// 先放入哨兵结点，在循环中就不用做非空判断\n\tstack := []int{0}\n\tsize += 2\n\tfor i := 1; i < size; i++ {\n\t\tfor heights[i] < heights[stack[len(stack)-1]] {\n\t\t\tcurHeight := heights[stack[len(stack)-1]]\n\t\t\tstack = stack[:len(stack)-1]\n\t\t\tcurWidth := i - stack[len(stack)-1] - 1\n\t\t\tif curHeight*curWidth > res {\n\t\t\t\tres = curHeight * curWidth\n\t\t\t}\n\t\t}\n\t\tstack = append(stack, i)\n\t}\n\treturn res\n}"
+  }
+ ]
+}

@@ -1,0 +1,18 @@
+{
+ "2.md": [
+  {
+   "go": "func searchMatrix(matrix [][]int, target int) bool {\n\tm, n := len(matrix), len(matrix[0])\n\tl, r := 0, m*n-1\n\tfor l <= r {\n\t\tmid := (l + r) >> 1\n\t\tx, y := mid/n, mid%n\n\t\tif matrix[x][y] > target {\n\t\t\tr = mid - 1\n\t\t} else if matrix[x][y] < target {\n\t\t\tl = mid + 1\n\t\t} else {\n\t\t\treturn true\n\t\t}\n\t}\n\treturn false\n}"
+  },
+  {
+   "go": "func searchMatrix(matrix [][]int, target int) bool {\n\tm, n := len(matrix), len(matrix[0])\n\tx, y := 0, n-1\n\tfor x < m && y >= 0 {\n\t\tif matrix[x][y] > target {\n\t\t\ty--\n\t\t} else if matrix[x][y] < target {\n\t\t\tx++\n\t\t} else {\n\t\t\treturn true\n\t\t}\n\t}\n\treturn false\n}"
+  }
+ ],
+ "Official.md": [
+  {
+   "python": "class Solution:\n    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:\n        row = bisect_right([r[0] for r in matrix], target) - 1\n        if row < 0:\n            return False\n        col = bisect_left(matrix[row], target)\n        return col < len(matrix[row]) and matrix[row][col] == target"
+  },
+  {
+   "python": "class Solution:\n    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:\n        m, n = len(matrix), len(matrix[0])\n        i = bisect_left([matrix[x // n][x % n] for x in range(m * n)], target)\n        return i < m * n and matrix[i // n][i % n] == target"
+  }
+ ]
+}

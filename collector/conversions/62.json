@@ -1,0 +1,10 @@
+{
+ "1.md": [
+  {
+   "go": "func uniquePaths(m int, n int) int {\n\t// 组合数 C(m+n-2, m-1)，用 Gamma 函数实现阶乘：n! = Γ(n+1)\n\tres := math.Gamma(float64(m+n-1)) / math.Gamma(float64(m)) / math.Gamma(float64(n))\n\treturn int(math.Round(res))\n}"
+  },
+  {
+   "go": "func uniquePaths(m int, n int) int {\n\tcur := make([]int, n)\n\tfor i := range cur {\n\t\tcur[i] = 1\n\t}\n\tfor i := 1; i < m; i++ {\n\t\tfor j := 1; j < n; j++ {\n\t\t\tcur[j] += cur[j-1]\n\t\t}\n\t}\n\treturn cur[n-1]\n}"
+  }
+ ]
+}

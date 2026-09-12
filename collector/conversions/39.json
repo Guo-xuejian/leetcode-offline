@@ -1,0 +1,15 @@
+{
+ "1.md": [
+  {
+   "go": "func combinationSum(candidates []int, target int) [][]int {\n\tvar dfs func(candidates []int, begin, size int, path []int, res *[][]int, target int)\n\tdfs = func(candidates []int, begin, size int, path []int, res *[][]int, target int) {\n\t\tif target < 0 {\n\t\t\treturn\n\t\t}\n\t\tif target == 0 {\n\t\t\t*res = append(*res, append([]int(nil), path...))\n\t\t\treturn\n\t\t}\n\t\tfor index := begin; index < size; index++ {\n\t\t\tdfs(candidates, index, size, append(path, candidates[index]), res, target-candidates[index])\n\t\t}\n\t}\n\tsize := len(candidates)\n\tif size == 0 {\n\t\treturn [][]int{}\n\t}\n\tres := [][]int{}\n\tdfs(candidates, 0, size, []int{}, &res, target)\n\treturn res\n}"
+  },
+  {
+   "go": "func combinationSum(candidates []int, target int) [][]int {\n\tvar dfs func(candidates []int, begin, size int, path []int, res *[][]int, target int)\n\tdfs = func(candidates []int, begin, size int, path []int, res *[][]int, target int) {\n\t\tif target == 0 {\n\t\t\t*res = append(*res, append([]int(nil), path...))\n\t\t\treturn\n\t\t}\n\t\tfor index := begin; index < size; index++ {\n\t\t\tresidue := target - candidates[index]\n\t\t\tif residue < 0 {\n\t\t\t\tbreak\n\t\t\t}\n\t\t\tdfs(candidates, index, size, append(path, candidates[index]), res, residue)\n\t\t}\n\t}\n\tsize := len(candidates)\n\tif size == 0 {\n\t\treturn [][]int{}\n\t}\n\tsort.Ints(candidates)\n\tres := [][]int{}\n\tdfs(candidates, 0, size, []int{}, &res, target)\n\treturn res\n}"
+  }
+ ],
+ "Official.md": [
+  {
+   "python": "class Solution:\n    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:\n        def dfs(target: int, idx: int) -> None:\n            if idx == len(candidates):\n                return\n            if target == 0:\n                ans.append(comb[:])\n                return\n            # 直接跳过\n            dfs(target, idx + 1)\n            # 选择当前数\n            if target - candidates[idx] >= 0:\n                comb.append(candidates[idx])\n                dfs(target - candidates[idx], idx)\n                comb.pop()\n\n        ans, comb = [], []\n        dfs(target, 0)\n        return ans"
+  }
+ ]
+}

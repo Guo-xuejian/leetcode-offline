@@ -1,0 +1,7 @@
+{
+ "Official.md": [
+  {
+   "go": "func canJump(nums []int) bool {\n\tn, rightmost := len(nums), 0\n\tfor i := 0; i < n; i++ {\n\t\tif i <= rightmost {\n\t\t\tif i+nums[i] > rightmost {\n\t\t\t\trightmost = i + nums[i]\n\t\t\t}\n\t\t\tif rightmost >= n-1 {\n\t\t\t\treturn true\n\t\t\t}\n\t\t}\n\t}\n\treturn false\n}"
+  }
+ ]
+}

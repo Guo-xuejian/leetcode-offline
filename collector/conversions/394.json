@@ -1,0 +1,18 @@
+{
+ "1.md": [
+  {
+   "go": "func decodeString(s string) string {\n\ttype item struct {\n\t\tmulti int\n\t\tres   string\n\t}\n\tstack := []item{}\n\tres, multi := \"\", 0\n\tfor i := 0; i < len(s); i++ {\n\t\tc := s[i]\n\t\tif c == '[' {\n\t\t\tstack = append(stack, item{multi, res})\n\t\t\tres, multi = \"\", 0\n\t\t} else if c == ']' {\n\t\t\tcur := stack[len(stack)-1]\n\t\t\tstack = stack[:len(stack)-1]\n\t\t\tres = cur.res + strings.Repeat(res, cur.multi)\n\t\t} else if c >= '0' && c <= '9' {\n\t\t\tmulti = multi*10 + int(c-'0')\n\t\t} else {\n\t\t\tres += string(c)\n\t\t}\n\t}\n\treturn res\n}"
+  },
+  {
+   "go": "func decodeString(s string) string {\n\tvar dfs func(s string, i int) (string, int)\n\tdfs = func(s string, i int) (string, int) {\n\t\tres, multi := \"\", 0\n\t\tfor i < len(s) {\n\t\t\tif s[i] >= '0' && s[i] <= '9' {\n\t\t\t\tmulti = multi*10 + int(s[i]-'0')\n\t\t\t} else if s[i] == '[' {\n\t\t\t\tvar tmp string\n\t\t\t\ttmp, i = dfs(s, i+1)\n\t\t\t\tres += strings.Repeat(tmp, multi)\n\t\t\t\tmulti = 0\n\t\t\t} else if s[i] == ']' {\n\t\t\t\treturn res, i\n\t\t\t} else {\n\t\t\t\tres += string(s[i])\n\t\t\t}\n\t\t\ti++\n\t\t}\n\t\treturn res, i\n\t}\n\tres, _ := dfs(s, 0)\n\treturn res\n}"
+  }
+ ],
+ "Official.md": [
+  {
+   "python": "class Solution:\n    def decodeString(self, s: str) -> str:\n        # 初始化栈，存字符串和重复次数\n        stack = []\n        res = \"\"\n        multi = 0\n        for c in s:\n            if c == '[':\n                stack.append((multi, res))\n                res, multi = \"\", 0\n            elif c == ']':\n                cur_multi, last_res = stack.pop()\n                res = last_res + cur_multi * res\n            elif '0' <= c <= '9':\n                multi = multi * 10 + int(c)\n            else:\n                res += c\n        return res"
+  },
+  {
+   "python": "class Solution:\n    def decodeString(self, s: str) -> str:\n        def dfs(s: str, i: int):\n            res = \"\"\n            multi = 0\n            while i < len(s):\n                if '0' <= s[i] <= '9':\n                    multi = multi * 10 + int(s[i])\n                elif s[i] == '[':\n                    tmp, i = dfs(s, i + 1)\n                    res += multi * tmp\n                    multi = 0\n                elif s[i] == ']':\n                    return res, i\n                else:\n                    res += s[i]\n                i += 1\n            return res, i\n\n        res, _ = dfs(s, 0)\n        return res"
+  }
+ ]
+}

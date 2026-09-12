@@ -1,0 +1,7 @@
+{
+ "1.md": [
+  {
+   "python": "class Solution:\n    def nextPermutation(self, nums: List[int]) -> None:\n        if len(nums) <= 1:\n            return\n        i, j, k = len(nums) - 2, len(nums) - 1, len(nums) - 1\n\n        # find: A[i]<A[j]\n        while i >= 0 and nums[i] >= nums[j]:\n            i -= 1\n            j -= 1\n\n        if i >= 0:  # 不是最后一个排列\n            # find: A[i]<A[k]\n            while nums[i] >= nums[k]:\n                k -= 1\n            # swap A[i], A[k]\n            nums[i], nums[k] = nums[k], nums[i]\n\n        # reverse A[j:end]\n        i, j = j, len(nums) - 1\n        while i < j:\n            nums[i], nums[j] = nums[j], nums[i]\n            i += 1\n            j -= 1"
+  }
+ ]
+}

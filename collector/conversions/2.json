@@ -1,0 +1,7 @@
+{
+ "Official.md": [
+  {
+   "python": "class Solution:\n    def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:\n        head = tail = None\n        carry = 0\n        while l1 is not None or l2 is not None:\n            n1, n2 = 0, 0\n            if l1 is not None:\n                n1 = l1.val\n                l1 = l1.next\n            if l2 is not None:\n                n2 = l2.val\n                l2 = l2.next\n            s = n1 + n2 + carry\n            s, carry = s % 10, s // 10\n            if head is None:\n                head = ListNode(s)\n                tail = head\n            else:\n                tail.next = ListNode(s)\n                tail = tail.next\n        if carry > 0:\n            tail.next = ListNode(carry)\n        return head"
+  }
+ ]
+}

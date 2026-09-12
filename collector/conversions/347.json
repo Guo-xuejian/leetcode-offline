@@ -1,0 +1,10 @@
+{
+ "Official.md": [
+  {
+   "python": "class Solution:\n    def topKFrequent(self, nums: List[int], k: int) -> List[int]:\n        res = []\n        # 建立哈希表统计频率\n        mapNum = {}\n        for item in nums:\n            mapNum[item] = mapNum.get(item, 0) + 1\n        # 建立桶：下标为频率，值为对应数字列表\n        buckets = [[] for _ in range(len(nums) + 1)]\n        for key, value in mapNum.items():\n            buckets[value].append(key)\n        # 倒序遍历桶\n        for i in range(len(buckets) - 1, -1, -1):\n            res.extend(buckets[i])\n            if len(res) >= k:\n                break\n        return res[:k]"
+  },
+  {
+   "python": "class Solution:\n    def topKFrequent(self, nums: List[int], k: int) -> List[int]:\n        mapNum = {}\n        for item in nums:\n            mapNum[item] = mapNum.get(item, 0) + 1\n        h = []  # 小顶堆，元素为 (频率, 数字)\n        for key, value in mapNum.items():\n            heapq.heappush(h, (value, key))\n            if len(h) > k:\n                heapq.heappop(h)\n        res = [0] * k\n        for i in range(k - 1, -1, -1):\n            res[i] = heapq.heappop(h)[1]\n        return res"
+  }
+ ]
+}

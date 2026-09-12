@@ -1,0 +1,7 @@
+{
+ "1.md": [
+  {
+   "go": "func firstMissingPositive(nums []int) int {\n\tsize := len(nums)\n\tfor i := 0; i < size; i++ {\n\t\t// 先判断这个数字是不是索引，然后判断这个数字是不是放在了正确的地方\n\t\tfor nums[i] >= 1 && nums[i] <= size && nums[i] != nums[nums[i]-1] {\n\t\t\tnums[i], nums[nums[i]-1] = nums[nums[i]-1], nums[i]\n\t\t}\n\t}\n\tfor i := 0; i < size; i++ {\n\t\tif i+1 != nums[i] {\n\t\t\treturn i + 1\n\t\t}\n\t}\n\treturn size + 1\n}"
+  }
+ ]
+}

@@ -1,0 +1,18 @@
+{
+ "1.md": [
+  {
+   "go": "func maxSubArray(nums []int) int {\n\tsize := len(nums)\n\tpre, res := 0, nums[0]\n\tfor i := 0; i < size; i++ {\n\t\tif pre+nums[i] > nums[i] {\n\t\t\tpre = pre + nums[i]\n\t\t} else {\n\t\t\tpre = nums[i]\n\t\t}\n\t\tif pre > res {\n\t\t\tres = pre\n\t\t}\n\t}\n\treturn res\n}"
+  },
+  {
+   "go": "func maxSubArray(nums []int) int {\n\tsize := len(nums)\n\tif size == 0 {\n\t\treturn 0\n\t}\n\treturn maxSubArrayDC(nums, 0, size-1)\n}\n\nfunc maxSubArrayDC(nums []int, left, right int) int {\n\tif left == right {\n\t\treturn nums[left]\n\t}\n\tmid := (left + right) >> 1\n\tm1 := maxSubArrayDC(nums, left, mid)\n\tm2 := maxSubArrayDC(nums, mid+1, right)\n\tm3 := maxCrossArray(nums, left, mid, right)\n\tif m1 >= m2 && m1 >= m3 {\n\t\treturn m1\n\t}\n\tif m2 >= m3 {\n\t\treturn m2\n\t}\n\treturn m3\n}\n\n// 一定包含 nums[mid] 元素的最大连续子数组的和，\n// 思路是看看左边\"扩散到底\"，得到一个最大数，右边\"扩散到底\"得到一个最大数，然后再加上中间数\nfunc maxCrossArray(nums []int, left, mid, right int) int {\n\tleftSumMax, s1 := 0, 0\n\tfor i := mid - 1; i >= left; i-- {\n\t\ts1 += nums[i]\n\t\tif s1 > leftSumMax {\n\t\t\tleftSumMax = s1\n\t\t}\n\t}\n\trightSumMax, s2 := 0, 0\n\tfor i := mid + 1; i <= right; i++ {\n\t\ts2 += nums[i]\n\t\tif s2 > rightSumMax {\n\t\t\trightSumMax = s2\n\t\t}\n\t}\n\treturn leftSumMax + nums[mid] + rightSumMax\n}"
+  }
+ ],
+ "Official.md": [
+  {
+   "python": "class Solution:\n    def maxSubArray(self, nums: List[int]) -> int:\n        max_ = nums[0]\n        for i in range(1, len(nums)):\n            if nums[i] + nums[i - 1] > nums[i]:\n                nums[i] += nums[i - 1]\n            if nums[i] > max_:\n                max_ = nums[i]\n        return max_"
+  },
+  {
+   "python": "class Status:\n    def __init__(self, lSum: int, rSum: int, mSum: int, iSum: int):\n        self.lSum = lSum\n        self.rSum = rSum\n        self.mSum = mSum\n        self.iSum = iSum\n\n\nclass Solution:\n    def maxSubArray(self, nums: List[int]) -> int:\n        return self.get(nums, 0, len(nums) - 1).mSum\n\n    def pushUp(self, l: Status, r: Status) -> Status:\n        iSum = l.iSum + r.iSum\n        lSum = max(l.lSum, l.iSum + r.lSum)\n        rSum = max(r.rSum, r.iSum + l.rSum)\n        mSum = max(max(l.mSum, r.mSum), l.rSum + r.lSum)\n        return Status(lSum, rSum, mSum, iSum)\n\n    def get(self, nums: List[int], l: int, r: int) -> Status:\n        if l == r:\n            return Status(nums[l], nums[l], nums[l], nums[l])\n        m = (l + r) >> 1\n        lSub = self.get(nums, l, m)\n        rSub = self.get(nums, m + 1, r)\n        return self.pushUp(lSub, rSub)"
+  }
+ ]
+}

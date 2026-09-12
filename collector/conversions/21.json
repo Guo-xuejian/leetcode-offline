@@ -1,0 +1,18 @@
+{
+ "1.md": [
+  {
+   "go": "func f(x int) int {\n\tif x > 0 {\n\t\treturn x + f(x-1)\n\t}\n\treturn 0 // f(0) = 0\n}"
+  },
+  {
+   "go": "func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {\n\tif l1 == nil {\n\t\treturn l2 // 终止条件，直到两个链表都空\n\t}\n\tif l2 == nil {\n\t\treturn l1\n\t}\n\tif l1.Val <= l2.Val { // 递归调用\n\t\tl1.Next = mergeTwoLists(l1.Next, l2)\n\t\treturn l1\n\t}\n\tl2.Next = mergeTwoLists(l1, l2.Next)\n\treturn l2\n}"
+  }
+ ],
+ "Official.md": [
+  {
+   "go": "func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {\n\tif l1 == nil {\n\t\treturn l2\n\t} else if l2 == nil {\n\t\treturn l1\n\t} else if l1.Val < l2.Val {\n\t\tl1.Next = mergeTwoLists(l1.Next, l2)\n\t\treturn l1\n\t} else {\n\t\tl2.Next = mergeTwoLists(l1, l2.Next)\n\t\treturn l2\n\t}\n}"
+  },
+  {
+   "go": "func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {\n\tprehead := &ListNode{Val: -1}\n\tprev := prehead\n\tfor l1 != nil && l2 != nil {\n\t\tif l1.Val <= l2.Val {\n\t\t\tprev.Next = l1\n\t\t\tl1 = l1.Next\n\t\t} else {\n\t\t\tprev.Next = l2\n\t\t\tl2 = l2.Next\n\t\t}\n\t\tprev = prev.Next\n\t}\n\t// 合并后 l1 和 l2 最多只有一个还未被合并完，我们直接将链表末尾指向未合并完的链表即可\n\tif l1 != nil {\n\t\tprev.Next = l1\n\t} else {\n\t\tprev.Next = l2\n\t}\n\treturn prehead.Next\n}"
+  }
+ ]
+}

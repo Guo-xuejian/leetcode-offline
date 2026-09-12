@@ -1,0 +1,10 @@
+{
+ "1.md": [
+  {
+   "go": "type heapNode struct {\n\tval int\n\tidx int\n}\n\ntype minHeap []heapNode\n\nfunc (h minHeap) Len() int            { return len(h) }\nfunc (h minHeap) Less(i, j int) bool  { return h[i].val < h[j].val }\nfunc (h minHeap) Swap(i, j int)       { h[i], h[j] = h[j], h[i] }\nfunc (h *minHeap) Push(x interface{}) { *h = append(*h, x.(heapNode)) }\nfunc (h *minHeap) Pop() interface{} {\n\told := *h\n\tn := len(old)\n\tx := old[n-1]\n\t*h = old[:n-1]\n\treturn x\n}\n\nfunc mergeKLists(lists []*ListNode) *ListNode {\n\tdummy := &ListNode{}\n\tp := dummy\n\th := &minHeap{}\n\theap.Init(h)\n\tfor i := range lists {\n\t\tif lists[i] != nil {\n\t\t\theap.Push(h, heapNode{lists[i].Val, i})\n\t\t\tlists[i] = lists[i].Next\n\t\t}\n\t}\n\tfor h.Len() > 0 {\n\t\tt := heap.Pop(h).(heapNode)\n\t\tp.Next = &ListNode{Val: t.val}\n\t\tp = p.Next\n\t\tif lists[t.idx] != nil {\n\t\t\theap.Push(h, heapNode{lists[t.idx].Val, t.idx})\n\t\t\tlists[t.idx] = lists[t.idx].Next\n\t\t}\n\t}\n\treturn dummy.Next\n}"
+  },
+  {
+   "go": "func mergeKLists(lists []*ListNode) *ListNode {\n\tif len(lists) == 0 {\n\t\treturn nil\n\t}\n\treturn merge(lists, 0, len(lists)-1)\n}\n\nfunc merge(lists []*ListNode, left, right int) *ListNode {\n\tif left == right {\n\t\treturn lists[left]\n\t}\n\tmid := left + (right-left)/2\n\tl1 := merge(lists, left, mid)\n\tl2 := merge(lists, mid+1, right)\n\treturn mergeTwoLists(l1, l2)\n}\n\nfunc mergeTwoLists(l1, l2 *ListNode) *ListNode {\n\tif l1 == nil {\n\t\treturn l2\n\t}\n\tif l2 == nil {\n\t\treturn l1\n\t}\n\tif l1.Val < l2.Val {\n\t\tl1.Next = mergeTwoLists(l1.Next, l2)\n\t\treturn l1\n\t}\n\tl2.Next = mergeTwoLists(l1, l2.Next)\n\treturn l2\n}"
+  }
+ ]
+}

@@ -1,0 +1,13 @@
+{
+ "Official.md": [
+  {
+   "python": "class Solution:\n    def longestValidParentheses(self, s: str) -> int:\n        maxAns = 0\n        dp = [0] * len(s)\n        for i in range(1, len(s)):\n            if s[i] == ')':\n                if s[i - 1] == '(':\n                    dp[i] = dp[i - 2] + 2 if i >= 2 else 2\n                elif i - dp[i - 1] > 0 and s[i - dp[i - 1] - 1] == '(':\n                    if i - dp[i - 1] >= 2:\n                        dp[i] = dp[i - 1] + dp[i - dp[i - 1] - 2] + 2\n                    else:\n                        dp[i] = dp[i - 1] + 2\n                maxAns = max(maxAns, dp[i])\n        return maxAns"
+  },
+  {
+   "python": "class Solution:\n    def longestValidParentheses(self, s: str) -> int:\n        maxAns = 0\n        stack = [-1]\n        for i in range(len(s)):\n            if s[i] == '(':\n                stack.append(i)\n            else:\n                stack.pop()\n                if not stack:\n                    stack.append(i)\n                else:\n                    maxAns = max(maxAns, i - stack[-1])\n        return maxAns"
+  },
+  {
+   "python": "class Solution:\n    def longestValidParentheses(self, s: str) -> int:\n        left, right, maxLength = 0, 0, 0\n        for i in range(len(s)):\n            if s[i] == '(':\n                left += 1\n            else:\n                right += 1\n            if left == right:\n                maxLength = max(maxLength, 2 * right)\n            elif right > left:\n                left, right = 0, 0\n        left, right = 0, 0\n        for i in range(len(s) - 1, -1, -1):\n            if s[i] == '(':\n                left += 1\n            else:\n                right += 1\n            if left == right:\n                maxLength = max(maxLength, 2 * left)\n            elif left > right:\n                left, right = 0, 0\n        return maxLength"
+  }
+ ]
+}

@@ -1,0 +1,21 @@
+{
+ "1.md": [
+  {
+   "python": "class Solution:\n    def subarraySum(self, nums: List[int], k: int) -> int:\n        count = 0\n        for i in range(len(nums)):\n            for j in range(i, len(nums)):\n                sum_ = 0\n                for q in range(i, j + 1):\n                    sum_ += nums[q]\n                if sum_ == k:\n                    count += 1\n        return count"
+  },
+  {
+   "python": "class Solution:\n    def subarraySum(self, nums: List[int], k: int) -> int:\n        count = 0\n        for i in range(len(nums)):\n            sum_ = 0\n            for j in range(i, len(nums)):\n                sum_ += nums[j]\n                if sum_ == k:\n                    count += 1\n        return count"
+  },
+  {
+   "python": "class Solution:\n    def subarraySum(self, nums: List[int], k: int) -> int:\n        count = 0\n        hash_ = {0: 1}\n        preSum = 0\n        for i in range(len(nums)):\n            preSum += nums[i]\n            if hash_.get(preSum - k, 0) > 0:\n                count += hash_[preSum - k]\n            hash_[preSum] = hash_.get(preSum, 0) + 1\n        return count"
+  }
+ ],
+ "Official.md": [
+  {
+   "python": "class Solution:\n    def subarraySum(self, nums: List[int], k: int) -> int:\n        count = 0\n        for start in range(len(nums)):\n            sum_ = 0\n            for end in range(start, -1, -1):\n                sum_ += nums[end]\n                if sum_ == k:\n                    count += 1\n        return count"
+  },
+  {
+   "python": "class Solution:\n    def subarraySum(self, nums: List[int], k: int) -> int:\n        count, pre = 0, 0\n        m = {0: 1}\n        for i in range(len(nums)):\n            pre += nums[i]\n            if pre - k in m:\n                count += m[pre - k]\n            m[pre] = m.get(pre, 0) + 1\n        return count"
+  }
+ ]
+}

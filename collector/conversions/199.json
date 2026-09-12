@@ -1,0 +1,10 @@
+{
+ "Official.md": [
+  {
+   "go": "func rightSideView(root *TreeNode) []int {\n\trightmostValueAtDepth := map[int]int{} // 深度为索引，存放节点的值\n\tmaxDepth := -1\n\ttype item struct {\n\t\tnode  *TreeNode\n\t\tdepth int\n\t}\n\tstack := []item{{root, 0}}\n\tfor len(stack) > 0 {\n\t\tit := stack[len(stack)-1]\n\t\tstack = stack[:len(stack)-1]\n\t\tif it.node != nil {\n\t\t\t// 维护二叉树的最大深度\n\t\t\tif it.depth > maxDepth {\n\t\t\t\tmaxDepth = it.depth\n\t\t\t}\n\t\t\t// 如果不存在对应深度的节点我们才插入\n\t\t\tif _, ok := rightmostValueAtDepth[it.depth]; !ok {\n\t\t\t\trightmostValueAtDepth[it.depth] = it.node.Val\n\t\t\t}\n\t\t\tstack = append(stack, item{it.node.Left, it.depth + 1})\n\t\t\tstack = append(stack, item{it.node.Right, it.depth + 1})\n\t\t}\n\t}\n\tres := []int{}\n\tfor depth := 0; depth <= maxDepth; depth++ {\n\t\tres = append(res, rightmostValueAtDepth[depth])\n\t}\n\treturn res\n}"
+  },
+  {
+   "go": "func rightSideView(root *TreeNode) []int {\n\trightmostValueAtDepth := map[int]int{} // 深度为索引，存放节点的值\n\tmaxDepth := -1\n\ttype item struct {\n\t\tnode  *TreeNode\n\t\tdepth int\n\t}\n\tqueue := []item{{root, 0}}\n\tfor len(queue) > 0 {\n\t\tit := queue[0]\n\t\tqueue = queue[1:]\n\t\tif it.node != nil {\n\t\t\t// 维护二叉树的最大深度\n\t\t\tif it.depth > maxDepth {\n\t\t\t\tmaxDepth = it.depth\n\t\t\t}\n\t\t\t// 由于每一层最后一个访问到的节点才是我们要的答案，因此不断更新对应深度的信息即可\n\t\t\trightmostValueAtDepth[it.depth] = it.node.Val\n\t\t\tqueue = append(queue, item{it.node.Left, it.depth + 1})\n\t\t\tqueue = append(queue, item{it.node.Right, it.depth + 1})\n\t\t}\n\t}\n\tres := []int{}\n\tfor depth := 0; depth <= maxDepth; depth++ {\n\t\tres = append(res, rightmostValueAtDepth[depth])\n\t}\n\treturn res\n}"
+  }
+ ]
+}

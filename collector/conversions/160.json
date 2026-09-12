@@ -1,0 +1,15 @@
+{
+ "2.md": [
+  {
+   "go": "func getIntersectionNode(headA, headB *ListNode) *ListNode {\n\tA, B := headA, headB\n\tfor A != B {\n\t\tif A == nil {\n\t\t\tA = headB\n\t\t} else {\n\t\t\tA = A.Next\n\t\t}\n\t\tif B == nil {\n\t\t\tB = headA\n\t\t} else {\n\t\t\tB = B.Next\n\t\t}\n\t}\n\treturn A\n}"
+  }
+ ],
+ "Official.md": [
+  {
+   "python": "class Solution:\n    def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> ListNode:\n        seen = set()\n        while headA is not None:\n            seen.add(headA)\n            headA = headA.next\n        while headB is not None:\n            if headB in seen:\n                return headB\n            headB = headB.next\n        return None"
+  },
+  {
+   "python": "class Solution:\n    def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> ListNode:\n        if headA is None or headB is None:\n            return None\n        pA, pB = headA, headB\n        while pA != pB:\n            pA = pA.next if pA is not None else headB\n            pB = pB.next if pB is not None else headA\n        return pA"
+  }
+ ]
+}

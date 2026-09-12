@@ -1,0 +1,7 @@
+{
+ "Official.md": [
+  {
+   "go": "func merge(intervals [][]int) [][]int {\n\tsort.Slice(intervals, func(i, j int) bool { return intervals[i][0] < intervals[j][0] })\n\tmerged := [][]int{}\n\tfor _, interval := range intervals {\n\t\t// 如果列表为空，或者当前区间与上一区间不重合，直接添加\n\t\tif len(merged) == 0 || merged[len(merged)-1][1] < interval[0] {\n\t\t\tmerged = append(merged, interval)\n\t\t} else {\n\t\t\t// 否则的话，我们就可以与上一区间进行合并\n\t\t\tif interval[1] > merged[len(merged)-1][1] {\n\t\t\t\tmerged[len(merged)-1][1] = interval[1]\n\t\t\t}\n\t\t}\n\t}\n\treturn merged\n}"
+  }
+ ]
+}

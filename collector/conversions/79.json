@@ -1,0 +1,7 @@
+{
+ "1.md": [
+  {
+   "go": "var dirs = [][2]int{{0, 1}, {0, -1}, {1, 0}, {-1, 0}}\n\nfunc exist(board [][]byte, word string) bool {\n\tm, n := len(board), len(board[0])\n\tmarked := make([][]bool, m)\n\tfor i := range marked {\n\t\tmarked[i] = make([]bool, n)\n\t}\n\tvar search func(i, j int, k int) bool\n\tsearch = func(i, j int, k int) bool {\n\t\tif board[i][j] != word[k] {\n\t\t\treturn false\n\t\t}\n\t\tif k == len(word)-1 {\n\t\t\treturn true\n\t\t}\n\t\tmarked[i][j] = true\n\t\tfor _, d := range dirs {\n\t\t\tni, nj := i+d[0], j+d[1]\n\t\t\tif ni >= 0 && ni < m && nj >= 0 && nj < n && !marked[ni][nj] && search(ni, nj, k+1) {\n\t\t\t\treturn true\n\t\t\t}\n\t\t}\n\t\tmarked[i][j] = false\n\t\treturn false\n\t}\n\tfor i := 0; i < m; i++ {\n\t\tfor j := 0; j < n; j++ {\n\t\t\tif search(i, j, 0) {\n\t\t\t\treturn true\n\t\t\t}\n\t\t}\n\t}\n\treturn false\n}"
+  }
+ ]
+}

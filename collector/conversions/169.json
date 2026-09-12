@@ -1,0 +1,19 @@
+{
+ "Official.md": [
+  {
+   "go": "func majorityElement(nums []int) int {\n\tcounts := map[int]int{}\n\tfor _, num := range nums {\n\t\tcounts[num]++\n\t}\n\tmajority, maxCount := 0, 0\n\tfor k, v := range counts {\n\t\tif v > maxCount {\n\t\t\tmajority, maxCount = k, v\n\t\t}\n\t}\n\treturn majority\n}"
+  },
+  {
+   "go": "func majorityElement(nums []int) int {\n\tsort.Ints(nums)\n\treturn nums[len(nums)/2]\n}"
+  },
+  {
+   "go": "func majorityElement(nums []int) int {\n\tmajorityCount := len(nums) / 2\n\tfor {\n\t\tcandidate := nums[rand.Intn(len(nums))]\n\t\tcount := 0\n\t\tfor _, elem := range nums {\n\t\t\tif elem == candidate {\n\t\t\t\tcount++\n\t\t\t}\n\t\t}\n\t\tif count > majorityCount {\n\t\t\treturn candidate\n\t\t}\n\t}\n}"
+  },
+  {
+   "go": "func majorityElement(nums []int) int {\n\tvar majorityElementRec func(lo, hi int) int\n\tmajorityElementRec = func(lo, hi int) int {\n\t\t// base case; the only element in an array of size 1 is the majority\n\t\t// element.\n\t\tif lo == hi {\n\t\t\treturn nums[lo]\n\t\t}\n\t\t// recurse on left and right halves of this slice.\n\t\tmid := (hi-lo)/2 + lo\n\t\tleft := majorityElementRec(lo, mid)\n\t\tright := majorityElementRec(mid+1, hi)\n\t\t// if the two halves agree on the majority element, return it.\n\t\tif left == right {\n\t\t\treturn left\n\t\t}\n\t\t// otherwise, count each element and return the \"winner\".\n\t\tleftCount := 0\n\t\tfor i := lo; i <= hi; i++ {\n\t\t\tif nums[i] == left {\n\t\t\t\tleftCount++\n\t\t\t}\n\t\t}\n\t\trightCount := 0\n\t\tfor i := lo; i <= hi; i++ {\n\t\t\tif nums[i] == right {\n\t\t\t\trightCount++\n\t\t\t}\n\t\t}\n\t\tif leftCount > rightCount {\n\t\t\treturn left\n\t\t}\n\t\treturn right\n\t}\n\treturn majorityElementRec(0, len(nums)-1)\n}"
+  },
+  {
+   "go": "func majorityElement(nums []int) int {\n\tcount, candidate := 0, 0\n\tfor _, num := range nums {\n\t\tif count == 0 {\n\t\t\tcandidate = num\n\t\t}\n\t\tif num == candidate {\n\t\t\tcount++\n\t\t} else {\n\t\t\tcount--\n\t\t}\n\t}\n\treturn candidate\n}"
+  }
+ ]
+}

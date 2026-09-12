@@ -1,0 +1,15 @@
+{
+ "1.md": [
+  {
+   "go": "func permute(nums []int) [][]int {\n\tsize := len(nums)\n\tres := [][]int{}\n\tif size == 0 {\n\t\treturn res\n\t}\n\tused := make([]bool, size)\n\tvar dfs func(path []int, depth int)\n\tdfs = func(path []int, depth int) {\n\t\tif depth == size {\n\t\t\tres = append(res, append([]int(nil), path...))\n\t\t\treturn\n\t\t}\n\t\tfor i := 0; i < size; i++ {\n\t\t\tif !used[i] {\n\t\t\t\tused[i] = true\n\t\t\t\tdfs(append(path, nums[i]), depth+1)\n\t\t\t\tused[i] = false\n\t\t\t}\n\t\t}\n\t}\n\tdfs([]int{}, 0)\n\treturn res\n}"
+  },
+  {
+   "go": "func permute(nums []int) [][]int {\n\tsize := len(nums)\n\tres := [][]int{}\n\tif size == 0 {\n\t\treturn res\n\t}\n\tvar dfs func(path []int, depth, state int)\n\tdfs = func(path []int, depth, state int) {\n\t\tif depth == size {\n\t\t\tres = append(res, append([]int(nil), path...))\n\t\t\treturn\n\t\t}\n\t\tfor i := 0; i < size; i++ {\n\t\t\tif (state>>i)&1 == 0 {\n\t\t\t\tdfs(append(path, nums[i]), depth+1, state^(1<<i))\n\t\t\t}\n\t\t}\n\t}\n\tdfs([]int{}, 0, 0)\n\treturn res\n}"
+  }
+ ],
+ "Official.md": [
+  {
+   "go": "func permute(nums []int) [][]int {\n\tn := len(nums)\n\tres := [][]int{}\n\tvar backtrack func(first int)\n\tbacktrack = func(first int) {\n\t\t// 所有数都填完了\n\t\tif first == n {\n\t\t\ttmp := make([]int, n)\n\t\t\tcopy(tmp, nums)\n\t\t\tres = append(res, tmp)\n\t\t\treturn\n\t\t}\n\t\tfor i := first; i < n; i++ {\n\t\t\t// 动态维护数组\n\t\t\tnums[first], nums[i] = nums[i], nums[first]\n\t\t\t// 继续递归填下一个数\n\t\t\tbacktrack(first + 1)\n\t\t\t// 撤销操作\n\t\t\tnums[first], nums[i] = nums[i], nums[first]\n\t\t}\n\t}\n\tbacktrack(0)\n\treturn res\n}"
+  }
+ ]
+}

@@ -1,0 +1,10 @@
+{
+ "1.md": [
+  {
+   "go": "func rob(nums []int) int {\n\tif len(nums) == 0 {\n\t\treturn 0\n\t}\n\t// 子问题：\n\t// f(k) = 偷 [0..k) 房间中的最大金额\n\t// f(0) = 0\n\t// f(1) = nums[0]\n\t// f(k) = max{ rob(k-1), nums[k-1] + rob(k-2) }\n\tN := len(nums)\n\tdp := make([]int, N+1)\n\tdp[0] = 0\n\tdp[1] = nums[0]\n\tfor k := 2; k <= N; k++ {\n\t\tif dp[k-1] > nums[k-1]+dp[k-2] {\n\t\t\tdp[k] = dp[k-1]\n\t\t} else {\n\t\t\tdp[k] = nums[k-1] + dp[k-2]\n\t\t}\n\t}\n\treturn dp[N]\n}"
+  },
+  {
+   "go": "func rob(nums []int) int {\n\tprev, curr := 0, 0\n\t// 每次循环，计算\"偷到当前房子为止的最大金额\"\n\tfor _, i := range nums {\n\t\t// 循环开始时，curr 表示 dp[k-1]，prev 表示 dp[k-2]\n\t\t// dp[k] = max{ dp[k-1], dp[k-2] + i }\n\t\ttmp := curr\n\t\tif prev+i > curr {\n\t\t\tcurr = prev + i\n\t\t}\n\t\tprev = tmp\n\t\t// 循环结束时，curr 表示 dp[k]，prev 表示 dp[k-1]\n\t}\n\treturn curr\n}"
+  }
+ ]
+}

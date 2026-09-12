@@ -1,0 +1,22 @@
+{
+ "2.md": [
+  {
+   "go": "func maxDepth(root *TreeNode) int {\n\t// 节点为空，高度为 0\n\tif root == nil {\n\t\treturn 0\n\t}\n\t// 递归计算左子树的最大深度\n\tleftHeight := maxDepth(root.Left)\n\t// 递归计算右子树的最大深度\n\trightHeight := maxDepth(root.Right)\n\t// 二叉树的最大深度 = 子树的最大深度 + 1（1 是根节点）\n\tif leftHeight > rightHeight {\n\t\treturn leftHeight + 1\n\t}\n\treturn rightHeight + 1\n}"
+  },
+  {
+   "go": "func maxDepth(root *TreeNode) int {\n\t// 节点为空，高度为 0\n\tif root == nil {\n\t\treturn 0\n\t}\n\t// 递归计算左子树的最大深度\n\tleftHeight := maxDepth(root.Left)\n\t// 递归计算右子树的最大深度\n\trightHeight := maxDepth(root.Right)\n\t// 二叉树的最大深度 = 子树的最大深度 + 1（1 是根节点）\n\tif leftHeight > rightHeight {\n\t\treturn leftHeight + 1\n\t}\n\treturn rightHeight + 1\n}"
+  },
+  {
+   "go": "func maxDepth(root *TreeNode) int {\n\tif root == nil {\n\t\treturn 0\n\t}\n\t// 初始化队列\n\tqueue := []*TreeNode{root}\n\tdepth := 0\n\t// 当队列不为空\n\tfor len(queue) > 0 {\n\t\t// 当前层的节点数\n\t\tn := len(queue)\n\t\t// 弹出当前层的所有节点，并将所有子节点入队列\n\t\tfor i := 0; i < n; i++ {\n\t\t\tnode := queue[0]\n\t\t\tqueue = queue[1:]\n\t\t\tif node.Left != nil {\n\t\t\t\tqueue = append(queue, node.Left)\n\t\t\t}\n\t\t\tif node.Right != nil {\n\t\t\t\tqueue = append(queue, node.Right)\n\t\t\t}\n\t\t}\n\t\tdepth++\n\t}\n\t// 二叉树最大层次即为二叉树最深深度\n\treturn depth\n}"
+  },
+  {
+   "go": "func maxDepth(root *TreeNode) int {\n\t// 空树，高度为 0\n\tif root == nil {\n\t\treturn 0\n\t}\n\t// 初始化队列和层次\n\tqueue := []*TreeNode{root}\n\tdepth := 0\n\t// 当队列不为空\n\tfor len(queue) > 0 {\n\t\t// 当前层的节点数\n\t\tn := len(queue)\n\t\t// 弹出当前层的所有节点，并将所有子节点入队列\n\t\tfor i := 0; i < n; i++ {\n\t\t\tnode := queue[0]\n\t\t\tqueue = queue[1:]\n\t\t\tif node.Left != nil {\n\t\t\t\tqueue = append(queue, node.Left)\n\t\t\t}\n\t\t\tif node.Right != nil {\n\t\t\t\tqueue = append(queue, node.Right)\n\t\t\t}\n\t\t}\n\t\tdepth++\n\t}\n\t// 二叉树最大层次即为二叉树最深深度\n\treturn depth\n}"
+  }
+ ],
+ "Official.md": [
+  {},
+  {
+   "python": "class Solution:\n    def maxDepth(self, root: TreeNode) -> int:\n        if root is None:\n            return 0\n        queue = [root]\n        ans = 0\n        while queue:\n            sz = len(queue)\n            while sz > 0:\n                node = queue.pop(0)\n                if node.left is not None:\n                    queue.append(node.left)\n                if node.right is not None:\n                    queue.append(node.right)\n                sz -= 1\n            ans += 1\n        return ans"
+  }
+ ]
+}

@@ -1,0 +1,10 @@
+{
+ "Official.md": [
+  {
+   "python": "class Solution:\n    def numSquares(self, n: int) -> int:\n        f = [0] * (n + 1)\n        for i in range(1, n + 1):\n            minn = float('inf')\n            j = 1\n            while j * j <= i:\n                minn = min(minn, f[i - j * j])\n                j += 1\n            f[i] = minn + 1\n        return f[n]"
+  },
+  {
+   "python": "class Solution:\n    def numSquares(self, n: int) -> int:\n        if n <= 0:\n            return 0\n        marked = [False] * (n + 1)\n        marked[n] = True\n        queue = [n]\n        level = 0\n        while queue:\n            level += 1\n            size = len(queue)\n            for _ in range(size):\n                num = queue.pop(0)\n                j = 1\n                while j * j <= num:\n                    nxt = num - j * j\n                    if nxt == 0:\n                        return level\n                    if not marked[nxt]:\n                        queue.append(nxt)\n                        marked[nxt] = True\n                    j += 1\n        return -1"
+  }
+ ]
+}

@@ -1,0 +1,18 @@
+{
+ "1.md": [
+  {
+   "go": "func partitionLabels(S string) []int {\n\toutput := []int{}\n\tvar findLast func(aw byte, S string) int\n\tfindLast = func(aw byte, S string) int {\n\t\tfor i := len(S) - 1; i >= 0; i-- {\n\t\t\tif S[i] == aw {\n\t\t\t\treturn i\n\t\t\t}\n\t\t}\n\t\treturn 0\n\t}\n\tvar breakpoint func(startIndex int) int\n\tbreakpoint = func(startIndex int) int {\n\t\taw := S[startIndex]\n\t\tlast := findLast(aw, S)\n\t\tj := startIndex + 1\n\t\tfor j < last {\n\t\t\ttemp := findLast(S[j], S)\n\t\t\tif temp > last {\n\t\t\t\tlast = temp\n\t\t\t}\n\t\t\tj++\n\t\t}\n\t\toutput = append(output, last-startIndex+1)\n\t\treturn last\n\t}\n\tstartIndex := 0\n\tfor startIndex < len(S) {\n\t\tstartIndex = breakpoint(startIndex) + 1\n\t}\n\treturn output\n}"
+  },
+  {
+   "go": "func partitionLabels(S string) []int {\n\t输出答案 := []int{}\n\tvar 找最后 func(一个字母 byte, S string) int\n\t找最后 = func(一个字母 byte, S string) int {\n\t\tfor 哎 := len(S) - 1; 哎 >= 0; 哎-- {\n\t\t\tif S[哎] == 一个字母 {\n\t\t\t\treturn 哎\n\t\t\t}\n\t\t}\n\t\treturn 0\n\t}\n\tvar 查分隔位 func(一段的开始位置 int) int\n\t查分隔位 = func(一段的开始位置 int) int {\n\t\t一个字母 := S[一段的开始位置]\n\t\t一段的最后位置 := 找最后(一个字母, S)\n\t\t杰 := 一段的开始位置 + 1\n\t\tfor 杰 < 一段的最后位置 {\n\t\t\t临时 := 找最后(S[杰], S)\n\t\t\tif 临时 > 一段的最后位置 {\n\t\t\t\t一段的最后位置 = 临时\n\t\t\t}\n\t\t\t杰++\n\t\t}\n\t\t输出答案 = append(输出答案, 一段的最后位置-一段的开始位置+1)\n\t\treturn 一段的最后位置\n\t}\n\t一段的开始位置 := 0\n\tfor 一段的开始位置 < len(S) {\n\t\t一段的开始位置 = 查分隔位(一段的开始位置) + 1\n\t}\n\treturn 输出答案\n}"
+  },
+  {
+   "go": "func partitionLabels(S string) []int {\n\tdic := map[byte]int{}\n\tfor i := 0; i < len(S); i++ {\n\t\tdic[S[i]] = i // 存储某个字母对应地最后一个序号\n\t}\n\tnum := 0 // 直接计数\n\tresult := []int{}\n\tj := dic[S[0]] // 第一个字符的最后位置\n\tfor i := 0; i < len(S); i++ { // 逐个遍历\n\t\tnum++ // 找到一个就加 1 个长度\n\t\tif dic[S[i]] > j { // 思路一样，如果最后位置比刚才的大，就更新最后位置\n\t\t\tj = dic[S[i]]\n\t\t}\n\t\tif i == j { // 找到这一段的结束了\n\t\t\tresult = append(result, num) // 加入 result\n\t\t\tnum = 0                      // 归 0\n\t\t}\n\t}\n\treturn result\n}"
+  }
+ ],
+ "2.md": [
+  {
+   "python": "class Solution:\n    def partitionLabels(self, S: str) -> List[int]:\n        maxPos = {}\n        for i in range(len(S)):\n            maxPos[S[i]] = i\n\n        res = []\n        start = 0\n        scannedCharMaxPos = 0\n        for i in range(len(S)):\n            curCharMaxPos = maxPos[S[i]]\n            if curCharMaxPos > scannedCharMaxPos:\n                scannedCharMaxPos = curCharMaxPos\n            if i == scannedCharMaxPos:\n                res.append(i - start + 1)\n                start = i + 1\n        return res"
+  }
+ ]
+}

@@ -1,0 +1,7 @@
+{
+ "2.md": [
+  {
+   "go": "func productExceptSelf(nums []int) []int {\n\tans := make([]int, len(nums))\n\tfor i := range ans {\n\t\tans[i] = 1\n\t}\n\ttmp := 1\n\tfor i := 1; i < len(nums); i++ {\n\t\tans[i] = ans[i-1] * nums[i-1] // 下三角\n\t}\n\tfor i := len(nums) - 2; i >= 0; i-- {\n\t\ttmp *= nums[i+1] // 上三角\n\t\tans[i] *= tmp    // 下三角 * 上三角\n\t}\n\treturn ans\n}"
+  }
+ ]
+}

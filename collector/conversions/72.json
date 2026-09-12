@@ -1,0 +1,12 @@
+{
+ "1.md": [
+  {
+   "go": "func minDistance(word1 string, word2 string) int {\n\tmemo := map[[2]int]int{}\n\tvar helper func(i, j int) int\n\thelper = func(i, j int) int {\n\t\tif i == len(word1) || j == len(word2) {\n\t\t\treturn len(word1) - i + len(word2) - j\n\t\t}\n\t\tif v, ok := memo[[2]int{i, j}]; ok {\n\t\t\treturn v\n\t\t}\n\t\tvar ans int\n\t\tif word1[i] == word2[j] {\n\t\t\tans = helper(i+1, j+1)\n\t\t} else {\n\t\t\tinserted := helper(i, j+1)\n\t\t\tdeleted := helper(i+1, j)\n\t\t\treplaced := helper(i+1, j+1)\n\t\t\tans = min(min(inserted, deleted), replaced) + 1\n\t\t}\n\t\tmemo[[2]int{i, j}] = ans\n\t\treturn ans\n\t}\n\treturn helper(0, 0)\n}\n\nfunc min(a, b int) int {\n\tif a < b {\n\t\treturn a\n\t}\n\treturn b\n}"
+  }
+ ],
+ "Official.md": [
+  {
+   "go": "func minDistance(word1 string, word2 string) int {\n\tn, m := len(word1), len(word2)\n\t// 有一个字符串为空串\n\tif n*m == 0 {\n\t\treturn n + m\n\t}\n\t// DP 数组\n\tD := make([][]int, n+1)\n\tfor i := range D {\n\t\tD[i] = make([]int, m+1)\n\t\tD[i][0] = i\n\t}\n\tfor j := 0; j <= m; j++ {\n\t\tD[0][j] = j\n\t}\n\t// 计算所有 DP 值\n\tfor i := 1; i <= n; i++ {\n\t\tfor j := 1; j <= m; j++ {\n\t\t\tleft := D[i-1][j] + 1\n\t\t\tdown := D[i][j-1] + 1\n\t\t\tleftDown := D[i-1][j-1]\n\t\t\tif word1[i-1] != word2[j-1] {\n\t\t\t\tleftDown++\n\t\t\t}\n\t\t\tD[i][j] = min(min(left, down), leftDown)\n\t\t}\n\t}\n\treturn D[n][m]\n}\n\nfunc min(a, b int) int {\n\tif a < b {\n\t\treturn a\n\t}\n\treturn b\n}"
+  }
+ ]
+}

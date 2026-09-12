@@ -1,0 +1,7 @@
+{
+ "1.md": [
+  {
+   "go": "func findMin(nums []int) int {\n\tleft, right := 0, len(nums)-1\n\tif nums[left] < nums[right] {\n\t\treturn nums[left]\n\t}\n\tfor left < right {\n\t\tmid := (left + right) >> 1\n\t\tif nums[0] > nums[mid] {\n\t\t\tright = mid\n\t\t} else {\n\t\t\tleft = mid + 1\n\t\t}\n\t}\n\treturn nums[left]\n}"
+  }
+ ]
+}

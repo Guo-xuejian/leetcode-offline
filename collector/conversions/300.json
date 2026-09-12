@@ -1,0 +1,20 @@
+{
+ "1.md": [
+  {
+   "go": "func lengthOfLIS(nums []int) int {\n\tsize := len(nums)\n\t// 特判\n\tif size < 2 {\n\t\treturn size\n\t}\n\t// tail 数组的定义：长度为 i + 1 的上升子序列的末尾最小是几\n\t// 遍历第 1 个数，直接放在有序数组 tail 的开头\n\ttail := []int{nums[0]}\n\tfor i := 1; i < size; i++ {\n\t\t// 找到大于等于 num 的第 1 个数，试图让它变小\n\t\tleft, right := 0, len(tail)\n\t\tfor left < right {\n\t\t\t// 选左中位数不是偶然，而是有原因的，原因请见 LeetCode 第 35 题题解\n\t\t\tmid := (left + right) >> 1\n\t\t\tif tail[mid] < nums[i] {\n\t\t\t\t// 中位数肯定不是要找的数，把它写在分支的前面\n\t\t\t\tleft = mid + 1\n\t\t\t} else {\n\t\t\t\tright = mid\n\t\t\t}\n\t\t}\n\t\tif left == len(tail) {\n\t\t\ttail = append(tail, nums[i])\n\t\t} else {\n\t\t\t// 一定能找到第 1 个大于等于 nums[i] 的元素，因此无需再单独判断，直接更新即可\n\t\t\ttail[left] = nums[i]\n\t\t}\n\t}\n\treturn len(tail)\n}"
+  }
+ ],
+ "2.md": [
+  {
+   "go": "// Dynamic programming + Dichotomy.\nfunc lengthOfLIS(nums []int) int {\n\ttails := make([]int, len(nums))\n\tres := 0\n\tfor _, num := range nums {\n\t\ti, j := 0, res\n\t\tfor i < j {\n\t\t\tm := (i + j) / 2\n\t\t\tif tails[m] < num { // 如果要求非严格递增，将此行 '<' 改为 '<=' 即可\n\t\t\t\ti = m + 1\n\t\t\t} else {\n\t\t\t\tj = m\n\t\t\t}\n\t\t}\n\t\ttails[i] = num\n\t\tif j == res {\n\t\t\tres++\n\t\t}\n\t}\n\treturn res\n}"
+  }
+ ],
+ "Official.md": [
+  {
+   "go": "func lengthOfLIS(nums []int) int {\n\tif len(nums) == 0 {\n\t\treturn 0\n\t}\n\tdp := make([]int, len(nums))\n\tfor i := range nums {\n\t\tdp[i] = 1\n\t\tfor j := 0; j < i; j++ {\n\t\t\tif nums[i] > nums[j] && dp[j]+1 > dp[i] {\n\t\t\t\tdp[i] = dp[j] + 1\n\t\t\t}\n\t\t}\n\t}\n\tmaxL := 0\n\tfor _, v := range dp {\n\t\tif v > maxL {\n\t\t\tmaxL = v\n\t\t}\n\t}\n\treturn maxL\n}"
+  },
+  {
+   "go": "func lengthOfLIS(nums []int) int {\n\td := []int{}\n\tfor _, n := range nums {\n\t\tif len(d) == 0 || n > d[len(d)-1] {\n\t\t\td = append(d, n)\n\t\t} else {\n\t\t\tl, r := 0, len(d)-1\n\t\t\tloc := r\n\t\t\tfor l <= r {\n\t\t\t\tmid := (l + r) / 2\n\t\t\t\tif d[mid] >= n {\n\t\t\t\t\tloc = mid\n\t\t\t\t\tr = mid - 1\n\t\t\t\t} else {\n\t\t\t\t\tl = mid + 1\n\t\t\t\t}\n\t\t\t}\n\t\t\td[loc] = n\n\t\t}\n\t}\n\treturn len(d)\n}"
+  }
+ ]
+}

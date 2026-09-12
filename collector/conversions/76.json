@@ -1,0 +1,12 @@
+{
+ "1.md": [
+  {
+   "go": "func minWindow(s string, t string) string {\n\tneed := map[byte]int{}\n\tfor i := 0; i < len(t); i++ {\n\t\tneed[t[i]]++\n\t}\n\tneedCnt := len(t)\n\ti, resL, resLen := 0, 0, int(^uint(0)>>1)\n\tfor j := 0; j < len(s); j++ {\n\t\tc := s[j]\n\t\tif need[c] > 0 {\n\t\t\tneedCnt--\n\t\t}\n\t\tneed[c]--\n\t\tif needCnt == 0 { // 步骤一：滑动窗口包含了所有 T 元素\n\t\t\tfor { // 步骤二：增加 i，排除多余元素\n\t\t\t\tc2 := s[i]\n\t\t\t\tif need[c2] == 0 {\n\t\t\t\t\tbreak\n\t\t\t\t}\n\t\t\t\tneed[c2]++\n\t\t\t\ti++\n\t\t\t}\n\t\t\tif j-i < resLen { // 记录结果\n\t\t\t\tresLen = j - i\n\t\t\t\tresL = i\n\t\t\t}\n\t\t\tneed[s[i]]++ // 步骤三：i 增加一个位置，寻找新的满足条件滑动窗口\n\t\t\tneedCnt++\n\t\t\ti++\n\t\t}\n\t}\n\tif resLen == int(^uint(0)>>1) { // 如果 res 始终没被更新过，代表无满足条件的结果\n\t\treturn \"\"\n\t}\n\treturn s[resL : resL+resLen+1]\n}"
+  }
+ ],
+ "Official.md": [
+  {
+   "python": "class Solution:\n    def minWindow(self, s: str, t: str) -> str:\n        ori, cnt = {}, {}\n        for c in t:\n            ori[c] = ori.get(c, 0) + 1\n        sLen = len(s)\n        ansL, ansR = -1, -1\n        length = float('inf')\n\n        def check() -> bool:\n            for k, v in ori.items():\n                if cnt.get(k, 0) < v:\n                    return False\n            return True\n\n        l = 0\n        for r in range(sLen):\n            if ori.get(s[r], 0) > 0:\n                cnt[s[r]] = cnt.get(s[r], 0) + 1\n            while check() and l <= r:\n                if r - l + 1 < length:\n                    length = r - l + 1\n                    ansL, ansR = l, l + length\n                if s[l] in ori:\n                    cnt[s[l]] -= 1\n                l += 1\n        if ansL == -1:\n            return \"\"\n        return s[ansL:ansR]"
+  }
+ ]
+}

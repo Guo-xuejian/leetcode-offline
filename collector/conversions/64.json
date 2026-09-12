@@ -1,0 +1,7 @@
+{
+ "1.md": [
+  {
+   "go": "func minPathSum(grid [][]int) int {\n\tm, n := len(grid), len(grid[0])\n\tfor i := 0; i < m; i++ {\n\t\tfor j := 0; j < n; j++ {\n\t\t\tif i == 0 && j == 0 {\n\t\t\t\tcontinue\n\t\t\t} else if i == 0 {\n\t\t\t\tgrid[i][j] = grid[i][j-1] + grid[i][j]\n\t\t\t} else if j == 0 {\n\t\t\t\tgrid[i][j] = grid[i-1][j] + grid[i][j]\n\t\t\t} else {\n\t\t\t\tif grid[i-1][j] < grid[i][j-1] {\n\t\t\t\t\tgrid[i][j] = grid[i-1][j] + grid[i][j]\n\t\t\t\t} else {\n\t\t\t\t\tgrid[i][j] = grid[i][j-1] + grid[i][j]\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n\treturn grid[m-1][n-1]\n}"
+  }
+ ]
+}

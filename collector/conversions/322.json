@@ -1,0 +1,18 @@
+{
+ "1.md": [
+  {
+   "go": "// 初始化 base case\n// dp[状态1][状态2][...] = base\n\n// 进行状态转移\n// for 状态1 in 状态1的所有取值：\n//     for 状态2 in 状态2的所有取值：\n//         for ...\n//             dp[状态1][状态2][...] = 求最值(选择1，选择2...)\n// 例如本题的凑零钱：dp[n] = min(dp[n], 1 + dp[n-coin])"
+  },
+  {
+   "go": "func coinChange(coins []int, amount int) int {\n\t// 备忘录\n\tmemo := map[int]int{}\n\tvar dp func(n int) int\n\tdp = func(n int) int {\n\t\t// 查备忘录，避免重复计算\n\t\tif v, ok := memo[n]; ok {\n\t\t\treturn v\n\t\t}\n\t\t// base case\n\t\tif n == 0 {\n\t\t\treturn 0\n\t\t}\n\t\tif n < 0 {\n\t\t\treturn -1\n\t\t}\n\t\tres := int(^uint(0) >> 1) // 相当于 float('INF')\n\t\tfor _, coin := range coins {\n\t\t\tsubproblem := dp(n - coin)\n\t\t\tif subproblem == -1 {\n\t\t\t\tcontinue\n\t\t\t}\n\t\t\tif 1+subproblem < res {\n\t\t\t\tres = 1 + subproblem\n\t\t\t}\n\t\t}\n\t\t// 记入备忘录\n\t\tif res == int(^uint(0)>>1) {\n\t\t\tmemo[n] = -1\n\t\t} else {\n\t\t\tmemo[n] = res\n\t\t}\n\t\treturn memo[n]\n\t}\n\treturn dp(amount)\n}"
+  }
+ ],
+ "Official.md": [
+  {
+   "go": "func coinChange(coins []int, amount int) int {\n\tmemo := map[int]int{}\n\tvar dp func(rem int) int\n\tdp = func(rem int) int {\n\t\tif rem < 0 {\n\t\t\treturn -1\n\t\t}\n\t\tif rem == 0 {\n\t\t\treturn 0\n\t\t}\n\t\tif v, ok := memo[rem]; ok {\n\t\t\treturn v\n\t\t}\n\t\tmini := int(1e9)\n\t\tfor _, coin := range coins {\n\t\t\tres := dp(rem - coin)\n\t\t\tif res >= 0 && res < mini {\n\t\t\t\tmini = res + 1\n\t\t\t}\n\t\t}\n\t\tif mini < int(1e9) {\n\t\t\tmemo[rem] = mini\n\t\t} else {\n\t\t\tmemo[rem] = -1\n\t\t}\n\t\treturn memo[rem]\n\t}\n\tif amount < 1 {\n\t\treturn 0\n\t}\n\treturn dp(amount)\n}"
+  },
+  {
+   "go": "func coinChange(coins []int, amount int) int {\n\tdp := make([]int, amount+1)\n\tfor i := range dp {\n\t\tdp[i] = int(^uint(0) >> 1) // 相当于 float('inf')\n\t}\n\tdp[0] = 0\n\tfor _, coin := range coins {\n\t\tfor x := coin; x <= amount; x++ {\n\t\t\tif dp[x-coin]+1 < dp[x] {\n\t\t\t\tdp[x] = dp[x-coin] + 1\n\t\t\t}\n\t\t}\n\t}\n\tif dp[amount] == int(^uint(0)>>1) {\n\t\treturn -1\n\t}\n\treturn dp[amount]\n}"
+  }
+ ]
+}

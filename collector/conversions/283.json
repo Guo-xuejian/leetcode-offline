@@ -1,0 +1,10 @@
+{
+ "1.md": [
+  {
+   "go": "func moveZeroes(nums []int) {\n\tif len(nums) == 0 {\n\t\treturn\n\t}\n\t// 第一次遍历的时候，j 指针记录非 0 的个数，只要是非 0 的统统都赋给 nums[j]\n\tj := 0\n\tfor i := 0; i < len(nums); i++ {\n\t\tif nums[i] != 0 {\n\t\t\tnums[j] = nums[i]\n\t\t\tj++\n\t\t}\n\t}\n\t// 非 0 元素统计完了，剩下的都是 0 了\n\t// 所以第二次遍历把末尾的元素都赋为 0 即可\n\tfor i := j; i < len(nums); i++ {\n\t\tnums[i] = 0\n\t}\n}"
+  },
+  {
+   "go": "func moveZeroes(nums []int) {\n\tif len(nums) == 0 {\n\t\treturn\n\t}\n\t// 两个指针 i 和 j\n\tj := 0\n\tfor i := 0; i < len(nums); i++ {\n\t\t// 当前元素 != 0，就把其交换到左边，等于 0 的交换到右边\n\t\tif nums[i] != 0 {\n\t\t\tnums[j], nums[i] = nums[i], nums[j]\n\t\t\tj++\n\t\t}\n\t}\n}"
+  }
+ ]
+}

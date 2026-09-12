@@ -1,0 +1,7 @@
+{
+ "Official.md": [
+  {
+   "python": "class Solution:\n    def searchInsert(self, nums: List[int], target: int) -> int:\n        n = len(nums)\n        left, right = 0, n - 1\n        ans = n\n        while left <= right:\n            mid = (right - left) >> 1 + left\n            if target <= nums[mid]:\n                ans = mid\n                right = mid - 1\n            else:\n                left = mid + 1\n        return ans"
+  }
+ ]
+}

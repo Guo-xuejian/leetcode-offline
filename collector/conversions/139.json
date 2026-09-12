@@ -1,0 +1,35 @@
+{
+ "2.md": [
+  {
+   "go": "func wordBreak(s string, wordDict []string) bool {\n\twordMap := map[string]bool{}\n\tfor _, w := range wordDict {\n\t\twordMap[w] = true\n\t}\n\tn := len(s)\n\tdp := make([]bool, n+1)\n\tdp[0] = true\n\tfor i := 0; i < n; i++ {\n\t\tfor j := i + 1; j <= n; j++ {\n\t\t\tif dp[i] && wordMap[s[i:j]] {\n\t\t\t\tdp[j] = true\n\t\t\t}\n\t\t}\n\t}\n\treturn dp[n]\n}"
+  },
+  {
+   "go": "func wordBreak(s string, wordDict []string) bool {\n\twordMap := map[string]bool{}\n\tfor _, w := range wordDict {\n\t\twordMap[w] = true\n\t}\n\tmemo := map[string]bool{}\n\tvar backTrack func(sub string) bool\n\tbackTrack = func(sub string) bool {\n\t\tif sub == \"\" {\n\t\t\treturn true\n\t\t}\n\t\tif v, ok := memo[sub]; ok {\n\t\t\treturn v\n\t\t}\n\t\tres := false\n\t\tfor i := 1; i <= len(sub); i++ {\n\t\t\tif wordMap[sub[:i]] {\n\t\t\t\tres = backTrack(sub[i:]) || res\n\t\t\t}\n\t\t}\n\t\tmemo[sub] = res\n\t\treturn res\n\t}\n\treturn backTrack(s)\n}"
+  }
+ ],
+ "1.md": [
+  {
+   "python": "def canBreak(start: int, s: str, wordMap: dict) -> bool:\n    if start == len(s):\n        return True\n\n    for i in range(start + 1, len(s) + 1):\n        prefix = s[start:i]\n        if prefix in wordMap and canBreak(i, s, wordMap):\n            return True\n\n    return False\n\n\nclass Solution:\n    def wordBreak(self, s: str, wordDict: List[str]) -> bool:\n        wordMap = {w: True for w in wordDict}\n        return canBreak(0, s, wordMap)"
+  },
+  {
+   "python": "def canBreak(start: int, s: str, wordMap: dict, memo: dict) -> bool:\n    if start == len(s):\n        return True\n\n    if start in memo:\n        return memo[start]\n\n    for i in range(start + 1, len(s) + 1):\n        prefix = s[start:i]\n        if prefix in wordMap and canBreak(i, s, wordMap, memo):\n            memo[start] = True\n            return True\n\n    memo[start] = False\n    return False\n\n\nclass Solution:\n    def wordBreak(self, s: str, wordDict: List[str]) -> bool:\n        wordMap = {w: True for w in wordDict}\n        memo = {}\n        return canBreak(0, s, wordMap, memo)"
+  },
+  {
+   "python": "class Solution:\n    def wordBreak(self, s: str, wordDict: List[str]) -> bool:\n        l = len(s)\n        wordMap = {v: True for v in wordDict}\n        queue = [0]\n        while queue:\n            index = queue.pop(0)\n            if index == l:\n                return True\n            for i in range(index + 1, l + 1):\n                if s[index:i] in wordMap:\n                    queue.append(i)\n        return False"
+  },
+  {
+   "python": "class Solution:\n    def wordBreak(self, s: str, wordDict: List[str]) -> bool:\n        l = len(s)\n        wordMap = {v: True for v in wordDict}\n        visited = [False] * (l + 1)  # 记录已经访问过的位置，避免重复\n        queue = [0]\n        while queue:\n            index = queue.pop(0)\n            if index == l:\n                return True\n            if visited[index]:\n                continue\n            visited[index] = True\n            for i in range(index + 1, l + 1):\n                if s[index:i] in wordMap:\n                    queue.append(i)\n        return False"
+  },
+  {
+   "python": "class Solution:\n    def wordBreak(self, s: str, wordDict: List[str]) -> bool:\n        l = len(s)\n        wordMap = {v: True for v in wordDict}\n        dp = [False] * (l + 1)\n        dp[0] = True\n        for i in range(l):\n            for j in range(i + 1, l + 1):\n                if dp[i] and s[i:j] in wordMap:\n                    dp[j] = True\n        return dp[l]"
+  },
+  {
+   "python": "class Solution:\n    def wordBreak(self, s: str, wordDict: List[str]) -> bool:\n        wordMap = {v: True for v in wordDict}\n        dp = [False] * (len(s) + 1)\n        dp[0] = True\n        for i in range(1, len(s) + 1):\n            for j in range(i):\n                if dp[j] and s[j:i] in wordMap:\n                    dp[i] = True\n                    break\n        return dp[len(s)]"
+  }
+ ],
+ "Official.md": [
+  {
+   "python": "class Solution:\n    def wordBreak(self, s: str, wordDict: List[str]) -> bool:\n        wordDictSet = {w: True for w in wordDict}\n        dp = [False] * (len(s) + 1)\n        dp[0] = True\n        for i in range(1, len(s) + 1):\n            for j in range(i):\n                if dp[j] and s[j:i] in wordDictSet:\n                    dp[i] = True\n                    break\n        return dp[len(s)]"
+  }
+ ]
+}

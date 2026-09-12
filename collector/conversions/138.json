@@ -1,0 +1,18 @@
+{
+ "1.md": [
+  {
+   "go": "func copyRandomList(head *Node) *Node {\n\tif head == nil {\n\t\treturn nil\n\t}\n\tp := head\n\t// 第一步，在每个原节点后面创建一个新节点\n\t// 1->1'->2->2'->3->3'\n\tfor p != nil {\n\t\tnewNode := &Node{Val: p.Val}\n\t\tnewNode.Next = p.Next\n\t\tp.Next = newNode\n\t\tp = newNode.Next\n\t}\n\tp = head\n\t// 第二步，设置新节点的随机节点\n\tfor p != nil {\n\t\tif p.Random != nil {\n\t\t\tp.Next.Random = p.Random.Next\n\t\t}\n\t\tp = p.Next.Next\n\t}\n\t// 第三步，将两个链表分离\n\tp = head\n\tdummy := &Node{Val: -1}\n\tcur := dummy\n\tfor p != nil {\n\t\tcur.Next = p.Next\n\t\tcur = cur.Next\n\t\tp.Next = cur.Next\n\t\tp = p.Next\n\t}\n\treturn dummy.Next\n}"
+  },
+  {
+   "go": "func copyRandomList(head *Node) *Node {\n\tif head == nil {\n\t\treturn nil\n\t}\n\t// 创建一个哈希表，key 是原节点，value 是新节点\n\td := map[*Node]*Node{}\n\tp := head\n\t// 将原节点和新节点放入哈希表中\n\tfor p != nil {\n\t\tnewNode := &Node{Val: p.Val}\n\t\td[p] = newNode\n\t\tp = p.Next\n\t}\n\tp = head\n\t// 遍历原链表，设置新节点的 next 和 random\n\tfor p != nil {\n\t\t// p 是原节点，d[p] 是对应的新节点，p.Next 是原节点的下一个\n\t\t// d[p.Next] 是原节点下一个对应的新节点\n\t\tif p.Next != nil {\n\t\t\td[p].Next = d[p.Next]\n\t\t}\n\t\t// p.Random 是原节点随机指向，d[p.Random] 是原节点随机指向对应的新节点\n\t\tif p.Random != nil {\n\t\t\td[p].Random = d[p.Random]\n\t\t}\n\t\tp = p.Next\n\t}\n\t// 返回头结点，即原节点对应的 value（新节点）\n\treturn d[head]\n}"
+  }
+ ],
+ "Official.md": [
+  {
+   "python": "class Solution:\n    def copyRandomList(self, head: 'Node') -> 'Node':\n        self.cacheNode = {}\n        return self.deepCopy(head)\n\n    def deepCopy(self, node: 'Node') -> 'Node':\n        if node is None:\n            return None\n        if node in self.cacheNode:\n            return self.cacheNode[node]\n        newNode = Node(node.val)\n        self.cacheNode[node] = newNode\n        newNode.next = self.deepCopy(node.next)\n        newNode.random = self.deepCopy(node.random)\n        return newNode"
+  },
+  {
+   "python": "class Solution:\n    def copyRandomList(self, head: 'Node') -> 'Node':\n        if head is None:\n            return None\n        # 第一步：在原链表的每个节点后面拷贝出一个新的节点\n        node = head\n        while node is not None:\n            node.next = Node(node.val, node.next)\n            node = node.next.next\n        # 第二步：给拷贝节点的 random 赋值\n        node = head\n        while node is not None:\n            if node.random is not None:\n                node.next.random = node.random.next\n            node = node.next.next\n        # 第三步：拆分链表\n        headNew = head.next\n        node = head\n        while node is not None:\n            nodeNew = node.next\n            node.next = node.next.next\n            if nodeNew.next is not None:\n                nodeNew.next = nodeNew.next.next\n            node = node.next\n        return headNew"
+  }
+ ]
+}

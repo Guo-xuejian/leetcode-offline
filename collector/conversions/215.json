@@ -1,0 +1,15 @@
+{
+ "1.md": [
+  {
+   "go": "func findKthLargest(nums []int, k int) int {\n\tsort.Ints(nums)\n\treturn nums[len(nums)-k]\n}"
+  }
+ ],
+ "Official.md": [
+  {
+   "python": "class Solution:\n    def findKthLargest(self, nums: List[int], k: int) -> int:\n        return self.quickSelect(nums, 0, len(nums) - 1, len(nums) - k)\n\n    def quickSelect(self, a: List[int], l: int, r: int, index: int) -> int:\n        q = self.partition(a, l, r)\n        if q == index:\n            return a[q]\n        elif q < index:\n            return self.quickSelect(a, q + 1, r, index)\n        return self.quickSelect(a, l, q - 1, index)\n\n    def partition(self, a: List[int], l: int, r: int) -> int:\n        x = a[r]\n        i = l - 1\n        for j in range(l, r):\n            if a[j] <= x:\n                i += 1\n                a[i], a[j] = a[j], a[i]\n        a[i + 1], a[r] = a[r], a[i + 1]\n        return i + 1"
+  },
+  {
+   "python": "class Solution:\n    def findKthLargest(self, nums: List[int], k: int) -> int:\n        heapSize = len(nums)\n        self.buildMaxHeap(nums, heapSize)\n        for i in range(len(nums) - 1, len(nums) - k, -1):\n            nums[0], nums[i] = nums[i], nums[0]\n            heapSize -= 1\n            self.maxHeapify(nums, 0, heapSize)\n        return nums[0]\n\n    def buildMaxHeap(self, a: List[int], heapSize: int) -> None:\n        for i in range(heapSize // 2, -1, -1):\n            self.maxHeapify(a, i, heapSize)\n\n    def maxHeapify(self, a: List[int], i: int, heapSize: int) -> None:\n        l, r, largest = i * 2 + 1, i * 2 + 2, i\n        if l < heapSize and a[l] > a[largest]:\n            largest = l\n        if r < heapSize and a[r] > a[largest]:\n            largest = r\n        if largest != i:\n            a[i], a[largest] = a[largest], a[i]\n            self.maxHeapify(a, largest, heapSize)"
+  }
+ ]
+}

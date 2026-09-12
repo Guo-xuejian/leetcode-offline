@@ -1,0 +1,15 @@
+{
+ "1.md": [
+  {
+   "go": "func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {\n\tif root == nil || root == p || root == q {\n\t\treturn root\n\t}\n\tleft := lowestCommonAncestor(root.Left, p, q)\n\tright := lowestCommonAncestor(root.Right, p, q)\n\tif left == nil && right == nil {\n\t\treturn nil // 1.\n\t}\n\tif left == nil {\n\t\treturn right // 3.\n\t}\n\tif right == nil {\n\t\treturn left // 4.\n\t}\n\treturn root // 2. if left and right\n}"
+  }
+ ],
+ "Official.md": [
+  {
+   "python": "class Solution:\n    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':\n        if root is None:\n            return None\n        if root.val == p.val or root.val == q.val:\n            return root\n        left = self.lowestCommonAncestor(root.left, p, q)\n        right = self.lowestCommonAncestor(root.right, p, q)\n        if left is not None and right is not None:\n            return root\n        if left is None:\n            return right\n        return left"
+  },
+  {
+   "python": "class Solution:\n    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':\n        parent, visited = {}, set()\n\n        def dfs(r: 'TreeNode') -> None:\n            if r is None:\n                return\n            if r.left is not None:\n                parent[r.left.val] = r\n                dfs(r.left)\n            if r.right is not None:\n                parent[r.right.val] = r\n                dfs(r.right)\n\n        dfs(root)\n        while p is not None:\n            visited.add(p.val)\n            p = parent.get(p.val)\n        while q is not None:\n            if q.val in visited:\n                return q\n            q = parent.get(q.val)\n        return None"
+  }
+ ]
+}

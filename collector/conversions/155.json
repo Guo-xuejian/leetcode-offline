@@ -1,0 +1,7 @@
+{
+ "2.md": [
+  {
+   "go": "type MinStack struct {\n\t// stack 中的每个元素为 [值, 当前栈内最小值]\n\tstack [][2]int\n}\n\nfunc Constructor() MinStack {\n\treturn MinStack{}\n}\n\nfunc (this *MinStack) Push(x int) {\n\tif len(this.stack) == 0 {\n\t\tthis.stack = append(this.stack, [2]int{x, x})\n\t} else {\n\t\tcurMin := this.stack[len(this.stack)-1][1]\n\t\tif x < curMin {\n\t\t\tcurMin = x\n\t\t}\n\t\tthis.stack = append(this.stack, [2]int{x, curMin})\n\t}\n}\n\nfunc (this *MinStack) Pop() {\n\tthis.stack = this.stack[:len(this.stack)-1]\n}\n\nfunc (this *MinStack) Top() int {\n\treturn this.stack[len(this.stack)-1][0]\n}\n\nfunc (this *MinStack) GetMin() int {\n\treturn this.stack[len(this.stack)-1][1]\n}"
+  }
+ ]
+}

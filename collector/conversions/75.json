@@ -1,0 +1,7 @@
+{
+ "1.md": [
+  {
+   "go": "// all in [0, zero] = 0\n// all in (zero, i) = 1\n// all in (two, len - 1] = 2\nfunc sortColors(nums []int) {\n\tsize := len(nums)\n\tif size < 2 {\n\t\treturn\n\t}\n\tzero, two, i := -1, size-1, 0\n\tfor i <= two {\n\t\tif nums[i] == 0 {\n\t\t\tzero++\n\t\t\tnums[i], nums[zero] = nums[zero], nums[i]\n\t\t\ti++\n\t\t} else if nums[i] == 1 {\n\t\t\ti++\n\t\t} else {\n\t\t\tnums[i], nums[two] = nums[two], nums[i]\n\t\t\ttwo--\n\t\t}\n\t}\n}"
+  }
+ ]
+}

@@ -1,0 +1,7 @@
+{
+ "1.md": [
+  {
+   "python": "class Solution:\n    def __init__(self):\n        self.max = float('-inf')\n\n    def maxPathSum(self, root: TreeNode) -> int:\n        self.find(root)\n        return self.max\n\n    def find(self, root: TreeNode) -> int:\n        if root is None:\n            return 0\n        l = self.find(root.left)\n        r = self.find(root.right)\n        s = l + r + root.val\n        if s > self.max:\n            self.max = s\n        temp = l if l > r else r\n        return temp + root.val if temp + root.val > 0 else 0"
+  }
+ ]
+}
